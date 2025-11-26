@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../public/css/form.css" />
+    <link rel="stylesheet" href="../public/css/fonts.css" />
+    <title><%= locals.title || 'Not title' %></title>
+  </head>
+  <body>
+    <div id="container">
+      <!-- Выпадающий список -->
+      <select id="action">
+        <option value="create">Отправить данные</option>
+        <option value="delete">Удалить данные</option>
+        <option value="edit">Редактировать данные</option>
+      </select>
+
+      <!-- ========== ФОРМА СОЗДАНИЯ (CREATE) ========== -->
+      <form 
+      id="form-create" 
+      action="/admin" 
+      method="POST" 
+      class="form-block"
+      >
+        <label for="id">Порядковый номер:</label>
+        <input type="number" name="serialNum" min="1" id="id" required />
+
+        <label for="author">Описание:</label>
+        <input type="text" name="description" id="author" required />
+
+        <label for="isbn">ISBN:</label>
+        <input type="text" name="isbn" id="isbn" required />
+
+        <label for="dataNumber">Номер полки:</label>
+        <input type="number" name="shelf" min="1" id="dataNumber" required />
+
+        <button type="submit">Отправить</button>
+      </form>
+
+      <!-- ========== ФОРМА УДАЛЕНИЯ (DELETE) ========== -->
+      <form
+        id="form-delete"
+        action="/admin"
+        method="POST"
+        class="form-block hidden"
+      >
+        <input type="hidden" name="_method" value="DELETE" />
+
+        <label for="delete-isbn">ISBN:</label>
+        <input type="text" name="isbn" id="delete-isbn" required />
+
+        <button type="submit">Удалить</button>
+      </form>
+
+      <!-- ========== ФОРМА РЕДАКТИРОВАНИЯ (PATCH) ========== -->
+      <form
+        id="form-edit"
+        action="/admin"
+        method="POST"
+        class="form-block hidden"
+      >
+        <input type="hidden" name="_method" value="PATCH" />
+
+        <label for="edit-id">Порядковый номер:</label>
+        <input type="number" name="serialNum" min="1" id="edit-id" required />
+
+        <label for="edit-description">Описание:</label>
+        <input type="text" name="description" id="edit-description" required />
+
+        <label for="edit-isbn">ISBN:</label>
+        <input type="text" name="isbn" id="edit-isbn" required />
+
+        <label for="edit-shelf">Номер полки:</label>
+        <input type="number" name="shelf" min="1" id="edit-shelf" required />
+
+        <button type="submit">Редактировать</button>
+      </form>
+
+      <div id="background-form"></div>
+    </div>
+
+    <div id="main-background"></div>
+
+    <!-- ========== JS ДЛЯ ПЕРЕКЛЮЧЕНИЯ ФОРМ ========== -->
+    <script>
+      const select = document.getElementById("action");
+
+      const formCreate = document.getElementById("form-create");
+      const formDelete = document.getElementById("form-delete");
+      const formEdit = document.getElementById("form-edit");
+
+      function switchForms() {
+        const value = select.value;
+
+        formCreate.classList.add("hidden");
+        formDelete.classList.add("hidden");
+        formEdit.classList.add("hidden");
+
+        if (value === "create") formCreate.classList.remove("hidden");
+        if (value === "delete") formDelete.classList.remove("hidden");
+        if (value === "edit") formEdit.classList.remove("hidden");
+      }
+
+      select.addEventListener("change", switchForms);
+    </script>
+  </body>
+</html>

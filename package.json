@@ -1,0 +1,30 @@
+{
+  "name": "database",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node --esm index.ts",
+    "dev": "nodemon --exec \"ts-node --esm\" index.ts"
+  },
+  "author": "Lefort",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/express": "^5.0.5",
+    "@types/method-override": "^3.0.0",
+    "@types/node": "^24.10.1",
+    "method-override": "^3.0.0",
+    "nodemon": "^3.1.11",
+    "typescript": "^5.9.3"
+  }
+}
