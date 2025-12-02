@@ -4,12 +4,11 @@ import { fileURLToPath } from 'url'
 import path from 'path';
 import router from './routers/main.ts'
 import methodOverride from "method-override";
-import bodyParser from 'body-parser';
 
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      PORT?: string;
+      PORT?: number;
     }
   }
 }
@@ -19,7 +18,7 @@ const __dirname = path.dirname(__filename)
 
 dotenv.config()
 
-const DATA_PORT = process.env.PORT 
+const DATA_PORT = Number(process.env.PORT)
 const app = express()
 
 

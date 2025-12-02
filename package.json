@@ -5,26 +5,31 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node --esm index.ts",
-    "dev": "nodemon --exec \"ts-node --esm\" index.ts"
+    "dev": "nodemon --exec tsx index.ts",
+    "start": "tsx index.ts",
+    "build": "tsc && node dist/index.js"
   },
   "author": "Lefort",
   "license": "ISC",
   "dependencies": {
+    "@types/pg": "^8.15.6",
     "body-parser": "^2.2.0",
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
-    "ts-node": "^10.9.2"
+    "pg": "^8.16.3",
+    "ws": "^8.18.3"
   },
   "devDependencies": {
     "@types/ejs": "^3.1.5",
     "@types/express": "^5.0.5",
     "@types/method-override": "^3.0.0",
     "@types/node": "^24.10.1",
+    "@types/ws": "^8.18.1",
     "method-override": "^3.0.0",
     "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.6",
     "typescript": "^5.9.3"
   }
 }

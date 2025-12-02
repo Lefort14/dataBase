@@ -1,4 +1,6 @@
 import express from "express";
+import { WebSocketServer } from "ws";
+import pool from './db.js'
 
 interface Form {
   serialNum: string;
@@ -7,7 +9,7 @@ interface Form {
   shelf: string;
 }
 
-function getform(req: express.Request, res: express.Response) {
+async function getform(req: express.Request, res: express.Response) {
   try {
     return res.render("index", {
       title: "Data base",
@@ -22,7 +24,7 @@ function getform(req: express.Request, res: express.Response) {
   }
 }
 
-function postform(req: express.Request<{}, {}, Form>, res: express.Response<string, { message: string }>) {
+async function postform(req: express.Request<{}, {}, Form>, res: express.Response<string, { message: string }>) {
   try {
     const { 
       serialNum, 
@@ -30,27 +32,22 @@ function postform(req: express.Request<{}, {}, Form>, res: express.Response<stri
       isbn, 
       shelf 
     }: Form = req.body;
+    
+    const result = await pool.query("SELECT * FROM books ORDER BY serial_id");
 
-    console.log(`
-      Серийный номер: ${serialNum}
-      Описание: ${description}
-      ISBN: ${isbn}
-      Номер полки: ${shelf}
-      `); 
-    // res.redirect('/admin');
-    res.status(200).send("post");
+    res.render("index", { books: result.rows })
   } catch (error) {
     res.send("ошибка!");
   }
 }
 
-function deleteform(req: express.Request, res: express.Response) {
+async function deleteform(req: express.Request, res: express.Response) {
   res
     .status(200)
     .send('delete')
 }
 
-function patchform(req: express.Request, res: express.Response) {
+async function patchform(req: express.Request, res: express.Response) {
   res
     .status(200)
     .send('patch')

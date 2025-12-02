@@ -80,7 +80,26 @@
       <div id="background-form"></div>
     </div>
 
-    <div id="main-background"></div>
+    <table>
+      <thead>
+        <tr>
+          <th>Номер полки</th>
+          <th>Название</th>
+          <th>ISBN</th>
+          <th>Номер полки</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% books.forEach(book => { %>
+          <tr>
+            <td><%= book.serial_id %>   </td>
+            <td><%= book.description %> </td>
+            <td><%= book.isbn %>        </td>
+            <td><%= book.shelf_number %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
 
     <!-- ========== JS ДЛЯ ПЕРЕКЛЮЧЕНИЯ ФОРМ ========== -->
     <script>
