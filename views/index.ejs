@@ -24,7 +24,7 @@
       class="form-block"
       >
         <label for="id">Порядковый номер:</label>
-        <input type="number" name="serialNum" min="1" id="id" required />
+        <input type="number" name="serial_id" min="1" id="id" required />
 
         <label for="author">Описание:</label>
         <input type="text" name="description" id="author" required />
@@ -33,7 +33,7 @@
         <input type="text" name="isbn" id="isbn" required />
 
         <label for="dataNumber">Номер полки:</label>
-        <input type="number" name="shelf" min="1" id="dataNumber" required />
+        <input type="number" name="shelf_number" min="1" id="dataNumber" required />
 
         <button type="submit">Отправить</button>
       </form>
@@ -63,7 +63,7 @@
         <input type="hidden" name="_method" value="PATCH" />
 
         <label for="edit-id">Порядковый номер:</label>
-        <input type="number" name="serialNum" min="1" id="edit-id" required />
+        <input type="number" name="serial_id" min="1" id="edit-id" required />
 
         <label for="edit-description">Описание:</label>
         <input type="text" name="description" id="edit-description" required />
@@ -72,7 +72,7 @@
         <input type="text" name="isbn" id="edit-isbn" required />
 
         <label for="edit-shelf">Номер полки:</label>
-        <input type="number" name="shelf" min="1" id="edit-shelf" required />
+        <input type="number" name="shelf_number" min="1" id="edit-shelf" required />
 
         <button type="submit">Редактировать</button>
       </form>
@@ -95,7 +95,7 @@
             <td><%= book.serial_id %>   </td>
             <td><%= book.description %> </td>
             <td><%= book.isbn %>        </td>
-            <td><%= book.shelf_number %></td>
+            <td><%= book.shelf_number%></td>
           </tr>
         <% }) %>
       </tbody>
