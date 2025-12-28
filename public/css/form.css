@@ -1,7 +1,7 @@
 @import url('./fonts.css');
 
 html, body {
-  overflow: hidden;
+  overflow:visible;
   height: 100%;
 }
 
@@ -13,22 +13,9 @@ body {
 }
 
 #main-background {
-  background-image: url('../images/yuri2.jpg');
-  min-height: 100vh;
-  background-size: 686px 960px;
-  background-repeat: no-repeat;
-  transform: translate(32%, 15%);
   flex: 1;
-}
-
-#background-form {
-   position: absolute;
-    top: 0;
-    left: 0;
-    width: 1000px;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.511); /* Черный с 50% прозрачностью */
-    z-index: 0; /* Под модальными окнами */
+  padding: 0;
+  margin: 0;
 }
 
 #container {
@@ -40,14 +27,34 @@ body {
   padding: 20px;
   height: 100vh;
   margin-left: 0;
-  background-image: url('../images/e41f71cdcb3fd9c39b0f075c006ec243.jpg');
-  background-size:cover;
-  /* filter: brightness(0.5); */
+  background-image: url('../images/background.jpg');
+  background-size: cover;
   background-repeat: no-repeat;
   border-right: 2px solid #000000;
   box-sizing: border-box;
-  width: 1000px; /* Шире в 1.5 раза (400px * 1.5 = 600px) */
+  width: 1000px;
+  position: relative; /* Добавляем для позиционирования псевдоэлемента */
 }
+
+/* Создаем полупрозрачный слой поверх фона */
+#container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.511); /* Прозрачный по умолчанию */
+  z-index: 1;
+  pointer-events: none; /* Чтобы можно было кликать сквозь слой */
+}
+
+/* Чтобы контент был поверх затемнения */
+#container > * {
+  position: relative;
+  z-index: 2;
+}
+
 
 #choice {
   color: white;
@@ -88,7 +95,7 @@ option {
   border: none;           
 }
 
-form {
+form, #download-tab {
   font-size: 20px;
   display: flex;
   flex-direction: column;
@@ -173,6 +180,50 @@ input[type="number"]::-webkit-inner-spin-button {
     display: none;
 }
 
+.load-hidden {
+  display: none;
+  margin-top: 20px;
+}
+
 .form-block {
     margin-top: 20px;
 }
+
+.content-table {
+  border-collapse: collapse;
+  margin-left: auto;
+  font-size: 1.1em;
+  min-width: 400px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.content-table thead tr {
+  background-color: #ff8400;
+  color: #ffffff;
+  text-align: center;
+  font-weight: bold;
+}
+
+.content-table th,
+.content-table td {
+  padding: 12px 15px;
+}
+
+.content-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+  text-align: center;
+}
+
+.content-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.content-table tbody tr:last-of-type {
+  border-bottom: 2px solid #dddddd;
+}
+
+/* .content-table tbody tr.active-row {
+  font-weight: bold;
+  color: #ff8400;
+} */
