@@ -43,20 +43,7 @@ app.use('/', router)
 app.use(express.static('public'))
 app.use(express.static(__dirname))
 
-const server = createServer(app)
-
-const wss = new WebSocketServer({ server });
-
-wss.on('connection', ws => {
-  ws.on('message', m => wss.clients.forEach(client => client.send(m)))
-  console.log('ws connected')
-  
-  ws.on("error", (e: Buffer) => ws.send(e));
-
-  ws.send('Hi there, I am a WebSocket server');
-
-})
-  
+const server = createServer(app) 
 
 server.listen(DATA_PORT, (): void => {
     console.log(`Port ${DATA_PORT}`)
@@ -64,5 +51,5 @@ server.listen(DATA_PORT, (): void => {
 
 export {
   DATA_PORT,
-  wss
+  server
 }
