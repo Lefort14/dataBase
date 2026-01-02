@@ -1,5 +1,5 @@
 import express from 'express'
-import { getform, postform, deleteform, patchform, download } from '../controllers/form.ts'
+import { getform, postform, deleteform, patchform, download } from '../infrastructure/form.ts'
 
 const adminRouter = express.Router()
 
