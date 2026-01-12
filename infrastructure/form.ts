@@ -8,11 +8,10 @@ async function getform(req: express.Request, res: express.Response)
 : Promise<void | Record<string, any>> {
   try {
     
-    const result = await getBook()
+    const result = await getBook()  
     
-    return res.render('index.ejs', {
-      books: result      
-    });
+    return res.render('index.ejs', { books: result });
+
   } catch (error) {
       return res
         .set("Content-Type", "text/plain")
@@ -26,79 +25,79 @@ async function getform(req: express.Request, res: express.Response)
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-async function postform(req: express.Request<Post>, res: express.Response<string, { message: string }>)
-: Promise<void | Record<string, any>> {
-  try {
+// async function postform(req: express.Request<Post>, res: express.Response<string, { message: string }>)
+// : Promise<void | Record<string, any>> {
+//   try {
     
-    await postBook(req.body)
+//     await postBook(req.body)
   
-    return res.redirect('/admin')
+//     return res.redirect('/admin')
 
-    } catch (error) {
-      console.log(error)
-      return res
-      .status(400)
-      .send(`
-        <h1>Ошибка POST запроса</h1>
-        <button class="back" onclick="history.back()">Вернуться к форме</button>
-      `);
-    }
-}
-
-/////////////////////////////////////////////////////////////////////////////////////
-
-async function deleteform(req: express.Request<Delete>, res: express.Response)
-: Promise<void | Record<string, any>> {
-  try {
-    const result = await deleteBook(req.body)
-
-    if(result === false) 
-      return res
-        .status(404)
-        .send(`
-        <h1>Книга не найдена</h1>
-        <button class="back" onclick="history.back()">Вернуться к форме</button>
-      `)
-
-      return res.redirect('/admin')
-
-    } catch (error) {
-      return res
-        .status(400)
-        .send(`
-          <h1>Ошибка DELETE запроса</h1>
-          <button class="back" onclick="history.back()">Вернуться к форме</button>
-        `);
-  }
-}
+//     } catch (error) {
+//       console.log(error)
+//       return res
+//       .status(400)
+//       .send(`
+//         <h1>Ошибка POST запроса</h1>
+//         <button class="back" onclick="history.back()">Вернуться к форме</button>
+//       `);
+//     }
+// }
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-async function patchform(req: express.Request<Patch>, res: express.Response)
-: Promise<void | Record<string, any>> {  
-  try {
-    
-    const result = await patchBook(req.body)
-    
-    if(result === false) 
-      return res
-        .status(404)
-        .send(`
-        <h1>Номер книги не найден</h1>
-        <button class="back" onclick="history.back()">Вернуться к форме</button>
-      `)
-    
-    return res.redirect('/admin')
+// async function deleteform(req: express.Request<Delete>, res: express.Response)
+// : Promise<void | Record<string, any>> {
+//   try {
+//     const result = await deleteBook(req.body)
 
-  } catch (error) {
-      return res
-      .status(400)
-      .send(`
-        <h1>Ошибка PATCH запроса</h1>
-        <button class="back" onclick="history.back()">Вернуться к форме</button>
-      `);
-  }
-}
+//     if(result === false) 
+//       return res
+//         .status(404)
+//         .send(`
+//         <h1>Книга не найдена</h1>
+//         <button class="back" onclick="history.back()">Вернуться к форме</button>
+//       `)
+
+//       return res.redirect('/admin')
+
+//     } catch (error) {
+//       return res
+//         .status(400)
+//         .send(`
+//           <h1>Ошибка DELETE запроса</h1>
+//           <button class="back" onclick="history.back()">Вернуться к форме</button>
+//         `);
+//   }
+// }
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+// async function patchform(req: express.Request<Patch>, res: express.Response)
+// : Promise<void | Record<string, any>> {  
+//   try {
+    
+//     const result = await patchBook(req.body)
+
+//     if(!result) 
+//       return res
+//         .status(404)
+//         .send(`
+//         <h1>Номер книги не найден или номера полок не совпадают</h1>
+//         <button class="back" onclick="history.back()">Вернуться к форме</button>
+//       `)
+    
+//     return res.redirect('/admin')
+
+//   } catch (error) {
+//       return res
+//       .status(400)
+//       .send(`
+//         <h1>Ошибка PATCH запроса</h1>
+//         <button class="back" onclick="history.back()">Вернуться к форме</button>
+//       `);
+//   }
+// }
 
 /////////////////////////////////////////////////////////////////////////////////////
 
@@ -121,4 +120,7 @@ Promise<void | Record<string, any>> {
   }
 }
 
-export { getform, postform, deleteform, patchform, download };
+export { 
+  getform, 
+  download 
+};
