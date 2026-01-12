@@ -1,40 +1,108 @@
 import WebSocket, { WebSocketServer } from 'ws';
-import { getBook } from '../domain/domain.ts';
-import { WSHandler } from '../interfaces.ts'
+import { getBook, postBook, deleteBook, patchBook, errLogs } from '../domain/domain.ts';
+import { Post, Delete, Patch } from '../interfaces.ts'
+import { get } from 'http';
 
-async function getHandleBook({
-    ws
-}: WSHandler) {
-  const books = await getBook();
-
-  ws.send(JSON.stringify({
-    type: 'books',
-    payload: books
-  }));
+async function getHandleBook(
+    ws: WebSocket
+) {
+    try {
+        const books = await getBook();
+      
+        ws.send(JSON.stringify({
+          type: 'booksUpdated',
+          payload: books
+        }));
+    } catch (err) {
+        if(err instanceof Error) {
+            console.log(err)
+            errLogs(err)
+        } 
+    }
 }
 
-async function postHandleBook({
-    ws,
-    payload,
-    wss
-}: WSHandler) {
+async function postHandleBook(
+    ws: WebSocket,
+    payload: Post,
+    wss: WebSocketServer
+) {
+    try {
+        await postBook(payload);
+        const books = await getBook();
     
+        wss.clients.forEach(client => {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(
+                    JSON.stringify({
+                        type: 'booksUpdated',
+                        payload: books
+                    })
+                );
+            }
+        });
+    } catch (err) {
+        if(err instanceof Error) {
+            console.log(err)
+            errLogs(err)
+        } 
+    }
 }
 
-async function deleleHandleBook({
-    ws,
-    payload,
-    wss
-}: WSHandler) {
-    
+async function deleleHandleBook(    
+    ws: WebSocket,
+    payload: Delete,
+    wss: WebSocketServer
+) {
+    try {
+        await deleteBook(payload);
+        const books = await getBook();
+        
+        wss.clients.forEach(client => {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(
+                    JSON.stringify({
+                        type: 'booksUpdated',
+                        payload: books
+                    })
+                );
+            }
+        });
+    } catch (err) {
+        if(err instanceof Error) {
+            console.log(err)
+            errLogs(err)
+        } 
+    }
 }
 
-async function patchHandleBook({
-    ws,
-    payload,
-    wss
-}: WSHandler) {
-    
+async function patchHandleBook(
+    ws: WebSocket,
+    payload: Patch,
+    wss: WebSocketServer
+) {
+    try {
+        
+        const result = await patchBook(payload)
+        const books = await getBook()
+
+        console.log(result[0].patch_book)
+
+        wss.clients.forEach(client => {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(
+                    JSON.stringify({
+                        type: 'booksUpdated',
+                        payload: books
+                    })
+                );
+            }
+        });
+    } catch (err) {
+        if(err instanceof Error) {
+            console.log(err)
+            errLogs(err)
+        } 
+    }
 }
 
 export { 

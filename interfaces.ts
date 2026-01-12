@@ -16,19 +16,18 @@ interface Patch {
   new_serial_id: string | null;
   description: string | null;
   isbn: string | null;
-  shelf_number: string | null;
 }
 
-interface WSHandler {
-  ws: WebSocket,
-  payload: any,
-  wss: WebSocketServer
-}
+type WSMessage =
+  | { type: 'getBook' }
+  | { type: 'postBook'; payload: Post }
+  | { type: 'deleteBook'; payload: Delete }
+  | { type: 'patchBook'; payload: Patch };
 
 export type {
     Post,
     Delete,
     Patch,
-    WSHandler
+    WSMessage
 }
 

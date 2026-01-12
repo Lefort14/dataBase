@@ -37,16 +37,16 @@ async function postBook(data: Post) {
     
         if(!isbn || isbn.trim().length === 0) isbn = 'Отсутствует'
     
-        await pool.query(`
+       const result = await pool.query(`
             SELECT add_book ($1, $2, $3)
             `,
             [description, isbn, shelf_number]
         )
     
-        const result = await pool.query(`
-            SELECT serial_id FROM books
-            ORDER BY serial_id;
-        `)
+        // const result = await pool.query(`
+        //     SELECT serial_id FROM books
+        //     ORDER BY serial_id;
+        // `)
         return result.rows
         
     } catch (error) {
@@ -98,34 +98,49 @@ async function patchBook(data: Patch) {
     try {
         let {
             old_serial_id,
-            n_serial_id,
+            new_serial_id,
             description,
-            isbn,
-            shelf_number
+            isbn
         }: Patch = data
 
-        const checkResult = await pool.query( 
-            `SELECT EXISTS(SELECT 1 FROM books WHERE serial_id = $1)`,
-            [old_serial_id]
-        );
+        function normalize(value: any) {
+            return value === '' ? null : value
+        }
 
-        if (!checkResult.rows[0].exists) return false
+        new_serial_id = normalize(new_serial_id)
+        isbn = normalize(isbn)
+        description = normalize(description)
         
-        await pool.query(`
+        // const checkResult = await pool.query( 
+        //     `SELECT EXISTS(SELECT 1 FROM books WHERE serial_id = $1)`,
+        //     [old_serial_id]
+        // );
+
+        // const checkShelf = await pool.query(`
+        //             SELECT b1.shelf_number = b2.shelf_number as same_shelf
+        //             FROM books b1, books b2
+        //             WHERE b1.serial_id = $1 AND b2.serial_id = $2
+        //         `,
+        //         [old_serial_id, new_serial_id])
+
+
+        // if(!checkResult.rows[0].exists) throw new Error('Книга не существует')
+        // if(!checkShelf.rows[0]?.same_shelf) throw new Error('Полки не совпадают')
+        
+        const result = await pool.query(`
             SELECT patch_book(
             $1,                 -- current_serial
             $2,                 -- new_serial (пусто в форме)
             $3,                 -- new_description (заполнено)
-            $4,                 -- new_isbn (пусто в форме)
-            $5                  -- new_shelf (пусто в форме)
+            $4                  -- new_isbn (пусто в форме)
             );
             `,
-            [old_serial_id, n_serial_id, description, isbn, shelf_number]
+            [old_serial_id, new_serial_id, description, isbn]
         );
 
-        const result = await pool.query(`
-            SELECT reorder_all_books()
-        `)
+        // const result = await pool.query(`
+        //     SELECT reorder_all_books()
+        // `)
 
         return result.rows
 
@@ -174,8 +189,8 @@ async function downloadFile(result: Writable) {
 }
 
 async function errLogs(error: Error) {
-    console.log(error.message); 
-    return fs.writeFile(__logPath, `[${new Date().toLocaleString()}] ${error}`, 'utf-8', () => console.log('логи обновлены!'))
+    console.log(error); 
+    return fs.appendFile(__logPath, `[${new Date().toLocaleString()}] ${error}\n`, 'utf-8', () => console.log('логи обновлены!'))
 }   
 
 export {
@@ -183,5 +198,6 @@ export {
     postBook,
     deleteBook,
     patchBook,
-    downloadFile
+    downloadFile,
+    errLogs
 }

@@ -207,7 +207,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .content-table th,
 .content-table td {
-  padding: 12px 15px;
+  padding: 5px 0px;
 }
 
 .content-table tbody tr {
@@ -227,3 +227,4 @@ input[type="number"]::-webkit-inner-spin-button {
   font-weight: bold;
   color: #ff8400;
 } */
+

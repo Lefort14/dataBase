@@ -21,8 +21,7 @@
       <!-- ========== ФОРМА СОЗДАНИЯ (CREATE) ========== -->
       <form 
       id="form-create" 
-      action="/admin" 
-      method="POST" 
+      data-action="postBook"
       class="form-block"
       >
         <label for="author">Описание:</label>
@@ -40,11 +39,10 @@
       <!-- ========== ФОРМА УДАЛЕНИЯ (DELETE) ========== -->
       <form
         id="form-delete"
-        action="/admin"
-        method="POST"
+        data-action="deleteBook"
         class="form-block hidden"
       >
-        <input type="hidden" name="_method" value="DELETE" />
+        <input type="hidden" name="_method" />
 
         <label for="delete-id">Порядковый номер:</label>
         <input type="number" name="serial_id" id="delete-id" required />
@@ -55,26 +53,25 @@
       <!-- ========== ФОРМА РЕДАКТИРОВАНИЯ (PATCH) ========== -->
       <form
         id="form-edit"
-        action="/admin"
-        method="POST"
+        data-action="patchBook"
         class="form-block hidden"
       >
-        <input type="hidden" name="_method" value="PATCH" />
+        <input type="hidden" name="_method" />
 
         <label for="edit-id">Порядковый номер:</label>
         <input type="number" name="old_serial_id" min="1" id="edit-id" required />
 
         <label for="edit-id">Новый порядковый номер:</label>
-        <input type="number" name="n_serial_id" min="1" id="edit-id"/>
+        <input type="number" name="new_serial_id" min="1" id="edit-id"/>
 
         <label for="edit-description">Описание:</label>
         <input type="text" name="description" id="edit-description"/>
 
         <label for="edit-isbn">ISBN:</label>
         <input type="text" name="isbn" id="edit-isbn"/>
-
+<!-- 
         <label for="edit-shelf">Номер полки:</label>
-        <input type="number" name="shelf_number" min="1" id="edit-shelf"/>
+        <input type="number" name="shelf_number" min="1" id="edit-shelf"/> -->
 
         <button type="submit">Редактировать</button>
       </form>    
@@ -92,7 +89,7 @@
             <tbody id="book-list">
               <% books.forEach(book => { %>
                 <tr>
-                  <td><%= book.serial_id %>   </td>
+                  <td id="serial"><%= book.serial_id %>   </td>
                   <td><%= book.description %> </td>
                   <td><%= book.isbn %>        </td>
                   <td><%= book.shelf_number%> </td>
@@ -127,12 +124,7 @@
       select.addEventListener("change", switchForms);
       
     </script>
-    <script>
-  const ws = new WebSocket(`ws://${location.hostname}:${location.port}`);
-
-  ws.onopen = () => console.log('client connected');
-  ws.onmessage = e => console.log('server says:', e.data);
-  ws.send('hello server'); // вызовет log на сервере
-</script>
+    <script src="/ws.js"></script>
+    <script src="/forms.js"></script>
   </body>
 </html>

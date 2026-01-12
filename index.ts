@@ -5,7 +5,7 @@ import path from 'path';
 import router from './routers/main.ts'
 import methodOverride from "method-override";
 import { createServer } from 'http';
-import { WebSocketServer } from "ws";
+import { initWSS } from './websocket/wss.ts';
 
 declare global {
   namespace NodeJS {
@@ -44,6 +44,7 @@ app.use(express.static('public'))
 app.use(express.static(__dirname))
 
 const server = createServer(app) 
+initWSS(server)
 
 server.listen(DATA_PORT, (): void => {
     console.log(`Port ${DATA_PORT}`)

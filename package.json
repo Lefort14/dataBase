@@ -33,7 +33,7 @@
     "method-override": "^3.0.0",
     "nodemon": "^3.1.11",
     "ts-node": "^10.9.2",
-    "tsx": "^4.20.6",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   }
 }
