@@ -37,16 +37,17 @@ async function postBook(data: Post) {
     
         if(!isbn || isbn.trim().length === 0) isbn = 'Отсутствует'
     
-       const result = await pool.query(`
+     await pool.query(`
             SELECT add_book ($1, $2, $3)
             `,
             [description, isbn, shelf_number]
         )
     
-        // const result = await pool.query(`
-        //     SELECT serial_id FROM books
-        //     ORDER BY serial_id;
-        // `)
+        const result = await pool.query(`
+            SELECT serial_id FROM books
+            ORDER BY serial_id;
+        `)
+        
         return result.rows
         
     } catch (error) {
@@ -134,6 +135,7 @@ async function patchBook(data: Patch) {
             $3,                 -- new_description (заполнено)
             $4                  -- new_isbn (пусто в форме)
             );
+            RETURN NEW
             `,
             [old_serial_id, new_serial_id, description, isbn]
         );
@@ -147,6 +149,21 @@ async function patchBook(data: Patch) {
     } catch (error) {
         if(error instanceof Error) await errLogs(error)
         throw error
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+async function partBook() {
+    try {
+        const result = await pool.query(`
+          SELECT * FROM books
+          ORDER BY serial_id ASC;
+          `);
+          
+        return result.rows
+    } catch (error) {
+        if(error instanceof Error) await errLogs(error)
     }
 }
 

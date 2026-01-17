@@ -33,7 +33,7 @@
         <label for="dataNumber">Номер полки:</label>
         <input type="number" name="shelf_number" min="1" id="dataNumber" required />
 
-        <button type="submit">Отправить</button>
+        <button type="submit" class="send">Отправить</button>
       </form>
               
       <!-- ========== ФОРМА УДАЛЕНИЯ (DELETE) ========== -->
@@ -47,7 +47,7 @@
         <label for="delete-id">Порядковый номер:</label>
         <input type="number" name="serial_id" id="delete-id" required />
 
-        <button type="submit">Удалить</button>
+        <button type="submit" class="send">Удалить</button>
       </form>
 
       <!-- ========== ФОРМА РЕДАКТИРОВАНИЯ (PATCH) ========== -->
@@ -69,12 +69,20 @@
 
         <label for="edit-isbn">ISBN:</label>
         <input type="text" name="isbn" id="edit-isbn"/>
-<!-- 
+        <!-- 
         <label for="edit-shelf">Номер полки:</label>
         <input type="number" name="shelf_number" min="1" id="edit-shelf"/> -->
 
-        <button type="submit">Редактировать</button>
+        <button type="submit" class="send">Редактировать</button>
       </form>    
+      <div id="pages">
+        <div class="btn-group" role="group">
+          <% buttons.forEach(btn => { %>
+                  <button><%= btn.page %> </button>
+          <% }) %>
+        </div>
+      </div>
+      <div id="info">DB_admin ver. 0.1.0</div>
     </div>
     <div id="main-background">
       <table class="content-table">

@@ -1,7 +1,15 @@
 @import url('./fonts.css');
+@import url("../../node_modules/bootstrap/dist/css/bootstrap.css");
+
+:root {
+  --bg1: white;
+  --bg2: #ff8400; 
+}
+
+/*  */
 
 html, body {
-  overflow:visible;
+  overflow: visible;
   height: 100%;
 }
 
@@ -15,49 +23,71 @@ body {
 #main-background {
   flex: 1;
   padding: 0;
-  margin: 0;
+  overflow: auto;
 }
 
 #container {
+  position: sticky;
+  top: 0;
+  left: 0;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  margin: 0;
+  
   padding: 20px;
-  height: 100vh;
-  margin-left: 0;
-  background-image: url('../images/background.jpg');
+  min-height: 100vh;
+  width: 1000px;
+  
+  border-right: 2px solid var(--bg2);
+  box-sizing: border-box;
+  box-shadow: 1px 0px 5px #000000;
+
+  background-color: var(--bg1);
   background-size: cover;
   background-repeat: no-repeat;
-  border-right: 2px solid #000000;
-  box-sizing: border-box;
-  width: 1000px;
-  position: relative; /* Добавляем для позиционирования псевдоэлемента */
+}
+
+#info {
+  background: var(--bg2);
+  color: var(--bg1);
+  font-weight: bold;
+  padding-left: 10px;
+  padding-top: 3px;
+  position: absolute; /* абсолютное позиционирование */
+  bottom: 0;          /* прижимаем к низу родителя */
+  left: 0;
+  right: 0;           /* растягиваем по ширине родителя */
+  height: 20px;       
 }
 
 /* Создаем полупрозрачный слой поверх фона */
-#container::before {
+/* #container::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.511); /* Прозрачный по умолчанию */
+  background: rgba(0, 0, 0, 0.511);
   z-index: 1;
-  pointer-events: none; /* Чтобы можно было кликать сквозь слой */
-}
+  pointer-events: none; 
+} */
 
 /* Чтобы контент был поверх затемнения */
-#container > * {
-  position: relative;
+/* #container > * {
   z-index: 2;
+} */
+
+.btn-pages > .btn, .btn-primary {
+  background-color: var(--bg2);
+  border-radius: 0;
+  border: 2px solid black;
 }
 
-
 #choice {
-  color: white;
+  color: var(--bg1);
   margin: 20px 0 30px 0;
   text-align: center;
   width: 100%;
@@ -69,11 +99,10 @@ body {
 }
 
 #action {
-  color: #ffffff;
+  color: #000000;
   margin: 20px 0 30px 0;
   text-align: center;
   width: 4  0%;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-size: 28px;
   font-weight: bold;
   font-family: 'dbFont';
@@ -89,7 +118,7 @@ body {
 
 option {
   background: rgb(0, 0, 0); /* фон */
-  color: #fff;                 /* цвет текста */
+  color: var(--bg1);                 /* цвет текста */
   padding: 8px;                /* внутренние отступы */
   font-size: 16px;             /* размер шрифта */
   border: none;           
@@ -105,7 +134,8 @@ form, #download-tab {
   border-radius: 0; /* Без закруглений */
   gap: 15px;
   font-family: 'dbFont';
-  color: white; /* Белый текст в форме */
+  font-weight: bold;
+  color: rgb(0, 0, 0); /* Белый текст в форме */
   z-index: 10;
 }
 
@@ -115,13 +145,13 @@ textarea {
   font-size: 20px;
   padding: 12px;
   margin: 5px 0;
-  border: 2px solid #666;
+  border: 2px solid #000000;
   border-radius: 0; /* Без закруглений */
   width: 100%;
   max-width: 700px; /* Шире в 1.5 раза (350px * 1.5 ≈ 500px) */
   min-height: 50px;
   box-sizing: border-box;
-  background: rgba(0, 0, 0, 0.466); /* Полупрозрачный фон инпутов */
+  background: rgba(0, 0, 0, 0.539); /* Полупрозрачный фон инпутов */
   color: white; /* Белый текст */
   transition: border-color 0.3s ease;
 }
@@ -129,13 +159,12 @@ textarea {
 input[type="number"]:focus,
 input[type="text"]:focus,
 textarea:focus {
-  border-color: #fff;
+  border-color: var(--bg2);
   outline: none;
 }
 
-button {
-  color: white;
-  background-color: #0000004a;
+.send {
+  color: var(--bg1);
   padding: 12px 25px;
   margin: 15px 0 5px 0;
   border: none;
@@ -149,13 +178,13 @@ button {
   box-sizing: border-box;
   background: rgba(0, 0, 0, 0.466);; /* Полупрозрачный фон инпутов */
   color: white; /* Белый текст */
-  background-color: #000000;
-  border: 2px solid #666;
+  background-color: var(--bg2);
+  border: 2px solid #000000;
 }
 
-button:hover {
+.send:hover {
   background-color: #000000;
-  border: 2px solid white;
+  border: 2px solid var(--bg2);
   border-width: 2px;
 }
 
@@ -166,7 +195,7 @@ button:hover {
 
 /* Стили для текста в textarea */
 textarea {
-  color: white;
+  color: var(--bg1);
   resize: vertical;
 }
 
@@ -199,8 +228,8 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .content-table thead tr {
-  background-color: #ff8400;
-  color: #ffffff;
+  background-color: var(--bg2);
+  color: var(--bg1);
   text-align: center;
   font-weight: bold;
 }
