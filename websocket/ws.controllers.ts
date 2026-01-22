@@ -1,7 +1,7 @@
 import WebSocket, { WebSocketServer } from 'ws';
 import { getBook, postBook, deleteBook, patchBook, errLogs } from '../domain/domain.ts';
 import { Post, Delete, Patch } from '../interfaces.ts'
-import { get } from 'http';
+
 
 async function getHandleBook(
     ws: WebSocket
@@ -11,7 +11,7 @@ async function getHandleBook(
       
         ws.send(JSON.stringify({
           type: 'booksUpdated',
-          payload: books
+          payload: books.result
         }));
     } catch (err) {
         if(err instanceof Error) {
@@ -24,7 +24,7 @@ async function getHandleBook(
 async function postHandleBook(
     ws: WebSocket,
     payload: Post,
-    wss: WebSocketServer
+    wss: WebSocketServer,
 ) {
     try {
         await postBook(payload);
@@ -35,7 +35,7 @@ async function postHandleBook(
                 client.send(
                     JSON.stringify({
                         type: 'booksUpdated',
-                        payload: books
+                        payload: books.result
                     })
                 );
             }
@@ -51,7 +51,7 @@ async function postHandleBook(
 async function deleleHandleBook(    
     ws: WebSocket,
     payload: Delete,
-    wss: WebSocketServer
+    wss: WebSocketServer,
 ) {
     try {
         await deleteBook(payload);
@@ -62,7 +62,7 @@ async function deleleHandleBook(
                 client.send(
                     JSON.stringify({
                         type: 'booksUpdated',
-                        payload: books
+                        payload: books.result
                     })
                 );
             }
@@ -78,7 +78,7 @@ async function deleleHandleBook(
 async function patchHandleBook(
     ws: WebSocket,
     payload: Patch,
-    wss: WebSocketServer
+    wss: WebSocketServer,
 ) {
     try {
         
@@ -92,7 +92,7 @@ async function patchHandleBook(
                 client.send(
                     JSON.stringify({
                         type: 'booksUpdated',
-                        payload: books
+                        payload: books.result
                     })
                 );
             }
@@ -105,9 +105,10 @@ async function patchHandleBook(
     }
 }
 
+
 export { 
     getHandleBook, 
     postHandleBook, 
     deleleHandleBook, 
-    patchHandleBook 
+    patchHandleBook
 } 

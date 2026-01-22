@@ -1,27 +1,41 @@
 import { pool } from '../infrastructure/db.ts'
-import { Post, Delete, Patch } from '../interfaces.ts'
+import { Post, Delete, Patch, Page } from '../interfaces.ts'
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from "url";
 import { to as copyTo } from 'pg-copy-streams'
 import { Writable } from 'stream';
+import { curPage } from './pages.ts';
 
 const filename = fileURLToPath(import.meta.url)
 const __errorPath = path.dirname(filename)
 const __logPath = path.join(__errorPath, '../logs.txt')
 
 
-
 async function getBook() {
     try {
+        const pageInt = curPage.page
         const result = await pool.query(`
           SELECT * FROM books
+          WHERE shelf_number = $1
           ORDER BY serial_id ASC;
-          `);
-          
-        return result.rows
+          `, [pageInt]);
+
+        const pagesQuery = await pool.query(`
+          SELECT COUNT(DISTINCT shelf_number) AS num_groups
+          FROM books;
+        `) 
+        
+        const pages = parseInt(pagesQuery.rows[0].num_groups, 10);
+
+        return {
+            result: result.rows,
+            pages: pages
+        }
     } catch (error) {
         if(error instanceof Error) await errLogs(error)
+            
+        return { result: [], pages: 0 };
     }
 }
 
@@ -63,26 +77,19 @@ async function deleteBook(data: Delete) {
         const { 
             serial_id
         }: Delete = data;
-  
+        const pageInt = curPage.page
         const checkResult = await pool.query( 
-        `SELECT EXISTS(SELECT 1 FROM books WHERE serial_id = $1)`,
-        [serial_id]
+        `SELECT EXISTS(SELECT 1 FROM books WHERE shelf_number = $1 AND serial_id = $2)`,
+        [pageInt, serial_id]
         );
     
-        if (!checkResult.rows[0].exists) return false
+        if (!checkResult.rows[0].exists) 
+            return console.log('Книги с таким номером не существует')
     
         const result = await pool.query(`
-            WITH deleted AS (
-                DELETE FROM books 
-                WHERE serial_id = $1
-                RETURNING *
-            )
-            UPDATE books 
-            SET serial_id = serial_id - 1 
-            WHERE serial_id > $1
-            RETURNING *;
+            SELECT delete_book($1, $2)
             `, 
-            [serial_id]
+            [serial_id, pageInt]
         )
 
         return result.rows
@@ -103,6 +110,8 @@ async function patchBook(data: Patch) {
             description,
             isbn
         }: Patch = data
+
+        const pageInt = curPage.page
 
         function normalize(value: any) {
             return value === '' ? null : value
@@ -130,14 +139,14 @@ async function patchBook(data: Patch) {
         
         const result = await pool.query(`
             SELECT patch_book(
-            $1,                 -- current_serial
-            $2,                 -- new_serial (пусто в форме)
-            $3,                 -- new_description (заполнено)
-            $4                  -- new_isbn (пусто в форме)
+            $1,                 -- shelf_number
+            $2,                 -- current_serial
+            $3,                 -- new_serial (пусто в форме)
+            $4,                 -- new_description (заполнено)
+            $5                  -- new_isbn (пусто в форме)
             );
-            RETURN NEW
             `,
-            [old_serial_id, new_serial_id, description, isbn]
+            [pageInt, old_serial_id, new_serial_id, description, isbn]
         );
 
         // const result = await pool.query(`

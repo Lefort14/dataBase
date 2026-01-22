@@ -1,18 +1,14 @@
 const ws = new WebSocket(`ws://${location.host}`);
 
-ws.onopen = () => {
-  console.log('[WS] connected');
-};
-
 ws.onmessage = (e) => {
   const msg = JSON.parse(e.data);
 
   if (msg.type === 'booksUpdated') {
-    updateTable(msg.payload);
+    update(msg.payload);
   }
 };
 
-async function updateTable(books) {
+async function update(books, buttons) {
     const tbody = document.getElementById('book-list');
     tbody.innerHTML = '';
 
@@ -27,3 +23,17 @@ async function updateTable(books) {
         `;
     });
 }
+
+const buttons = document.querySelectorAll('[id^="btn_"]');
+
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    console.log('Clicked:', btn.innerText);
+    const page = btn.innerText
+    ws.send(JSON.stringify({
+        type: 'pageUpdated',
+        page: parseInt(page, 10)
+      })
+    )
+  });
+}); // работает

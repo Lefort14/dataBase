@@ -1,7 +1,6 @@
 import { WebSocketServer } from "ws";
 
 interface Post {
-  serial_id: string;
   description: string;
   isbn: string
   shelf_number: string;
@@ -18,16 +17,20 @@ interface Patch {
   isbn: string | null;
 }
 
+type Page = string | number | null;
+
 type WSMessage =
-  | { type: 'getBook' }
+  | { type: 'getBook'; }
   | { type: 'postBook'; payload: Post }
   | { type: 'deleteBook'; payload: Delete }
-  | { type: 'patchBook'; payload: Patch };
+  | { type: 'patchBook'; payload: Patch }
+  | { type: 'pageUpdated'; page: Page }
 
 export type {
     Post,
     Delete,
     Patch,
+    Page,
     WSMessage
 }
 

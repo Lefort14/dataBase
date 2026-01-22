@@ -1,6 +1,7 @@
 import WebSocket, { WebSocketServer } from 'ws';
 import { getHandleBook, postHandleBook, deleleHandleBook, patchHandleBook } from './ws.controllers.ts'
 import { WSMessage } from '../interfaces.ts';
+import { curPage } from '../domain/pages.ts';
 
 async function wsRouter(    
     ws: WebSocket,
@@ -30,6 +31,9 @@ async function wsRouter(
                 return await deleleHandleBook(ws, data.payload, wss);
             case 'patchBook':
                 return await patchHandleBook(ws, data.payload, wss);
+            case 'pageUpdated':
+                curPage.page = data.page
+                return await getHandleBook(ws);
             default:
             ws.send(JSON.stringify({
                 type: 'error',

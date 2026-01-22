@@ -76,10 +76,10 @@
         <button type="submit" class="send">Редактировать</button>
       </form>    
       <div id="pages">
-        <div class="btn-group" role="group">
-          <% buttons.forEach(btn => { %>
-                  <button><%= btn.page %> </button>
-          <% }) %>
+        <div class="group" role="group"> 
+             <% for (let i = 1; i <= pages; i++) { %>
+                <button type="button" data-num="<%= i %>" id="btn_<%= i %>" class="btn btn-primary btn-pages"><%= i %></button>
+              <% } %>
         </div>
       </div>
       <div id="info">DB_admin ver. 0.1.0</div>
@@ -97,10 +97,10 @@
             <tbody id="book-list">
               <% books.forEach(book => { %>
                 <tr>
-                  <td id="serial"><%= book.serial_id %>   </td>
+                  <td><%= book.serial_id %>   </td>
                   <td><%= book.description %> </td>
                   <td><%= book.isbn %>        </td>
-                  <td><%= book.shelf_number%> </td>
+                  <td><%= book.shelf_number %></td>
                 </tr>
               <% }) %>
             </tbody>
@@ -130,7 +130,6 @@
       }
 
       select.addEventListener("change", switchForms);
-      
     </script>
     <script src="/ws.js"></script>
     <script src="/forms.js"></script>

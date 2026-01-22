@@ -16,3 +16,4 @@ document.addEventListener('submit', e => {
     payload
   }));
 });
+

@@ -1,16 +1,13 @@
 import express from "express";
-import { pool } from './db.ts'
-import { Post, Delete, Patch } from '../interfaces.ts'
-import { getBook, postBook, deleteBook, patchBook, downloadFile } from '../domain/domain.ts'
+import { getBook, downloadFile } from '../domain/domain.ts'
 
 
-async function getform(req: express.Request, res: express.Response)
-: Promise<void | Record<string, any>> {
+async function getform(req: express.Request, res: express.Response) {
   try {
     
-    const result = await getBook()  
+    const data = await getBook()  
     
-    return res.render('index.ejs', { books: result });
+    return res.render('index.ejs', { books: data.result, pages: data.pages });
 
   } catch (error) {
       return res
@@ -25,84 +22,7 @@ async function getform(req: express.Request, res: express.Response)
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-// async function postform(req: express.Request<Post>, res: express.Response<string, { message: string }>)
-// : Promise<void | Record<string, any>> {
-//   try {
-    
-//     await postBook(req.body)
-  
-//     return res.redirect('/admin')
-
-//     } catch (error) {
-//       console.log(error)
-//       return res
-//       .status(400)
-//       .send(`
-//         <h1>Ошибка POST запроса</h1>
-//         <button class="back" onclick="history.back()">Вернуться к форме</button>
-//       `);
-//     }
-// }
-
-/////////////////////////////////////////////////////////////////////////////////////
-
-// async function deleteform(req: express.Request<Delete>, res: express.Response)
-// : Promise<void | Record<string, any>> {
-//   try {
-//     const result = await deleteBook(req.body)
-
-//     if(result === false) 
-//       return res
-//         .status(404)
-//         .send(`
-//         <h1>Книга не найдена</h1>
-//         <button class="back" onclick="history.back()">Вернуться к форме</button>
-//       `)
-
-//       return res.redirect('/admin')
-
-//     } catch (error) {
-//       return res
-//         .status(400)
-//         .send(`
-//           <h1>Ошибка DELETE запроса</h1>
-//           <button class="back" onclick="history.back()">Вернуться к форме</button>
-//         `);
-//   }
-// }
-
-/////////////////////////////////////////////////////////////////////////////////////
-
-// async function patchform(req: express.Request<Patch>, res: express.Response)
-// : Promise<void | Record<string, any>> {  
-//   try {
-    
-//     const result = await patchBook(req.body)
-
-//     if(!result) 
-//       return res
-//         .status(404)
-//         .send(`
-//         <h1>Номер книги не найден или номера полок не совпадают</h1>
-//         <button class="back" onclick="history.back()">Вернуться к форме</button>
-//       `)
-    
-//     return res.redirect('/admin')
-
-//   } catch (error) {
-//       return res
-//       .status(400)
-//       .send(`
-//         <h1>Ошибка PATCH запроса</h1>
-//         <button class="back" onclick="history.back()">Вернуться к форме</button>
-//       `);
-//   }
-// }
-
-/////////////////////////////////////////////////////////////////////////////////////
-
-async function download(req: express.Request, res: express.Response):
-Promise<void | Record<string, any>> {
+async function download(req: express.Request, res: express.Response) {
   try {
     res
     .setHeader('Content-Type', 'text/csv')
