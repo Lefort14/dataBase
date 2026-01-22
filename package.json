@@ -12,7 +12,6 @@
   "author": "Lefort",
   "license": "ISC",
   "dependencies": {
-    "@types/pg": "^8.15.6",
     "body-parser": "^2.2.0",
     "bootstrap": "^5.3.0",
     "dotenv": "^17.2.3",
@@ -29,6 +28,7 @@
     "@types/express": "^5.0.5",
     "@types/method-override": "^3.0.0",
     "@types/node": "^24.10.1",
+    "@types/pg": "^8.16.0",
     "@types/pg-copy-streams": "^1.2.5",
     "@types/ws": "^8.18.1",
     "method-override": "^3.0.0",

@@ -121,22 +121,6 @@ async function patchBook(data: Patch) {
         isbn = normalize(isbn)
         description = normalize(description)
         
-        // const checkResult = await pool.query( 
-        //     `SELECT EXISTS(SELECT 1 FROM books WHERE serial_id = $1)`,
-        //     [old_serial_id]
-        // );
-
-        // const checkShelf = await pool.query(`
-        //             SELECT b1.shelf_number = b2.shelf_number as same_shelf
-        //             FROM books b1, books b2
-        //             WHERE b1.serial_id = $1 AND b2.serial_id = $2
-        //         `,
-        //         [old_serial_id, new_serial_id])
-
-
-        // if(!checkResult.rows[0].exists) throw new Error('Книга не существует')
-        // if(!checkShelf.rows[0]?.same_shelf) throw new Error('Полки не совпадают')
-        
         const result = await pool.query(`
             SELECT patch_book(
             $1,                 -- shelf_number
@@ -163,21 +147,6 @@ async function patchBook(data: Patch) {
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-async function partBook() {
-    try {
-        const result = await pool.query(`
-          SELECT * FROM books
-          ORDER BY serial_id ASC;
-          `);
-          
-        return result.rows
-    } catch (error) {
-        if(error instanceof Error) await errLogs(error)
-    }
-}
-
-/////////////////////////////////////////////////////////////////////////////////////
-
 async function downloadFile(result: Writable) {
     try {
         const client = await pool.connect()
@@ -190,7 +159,7 @@ async function downloadFile(result: Writable) {
         isbn as "ISBN", 
         shelf_number as "Номер полки" 
         FROM books
-        ORDER BY serial_id, shelf_number
+        ORDER BY shelf_number, serial_id
         ) 
         TO STDOUT WITH CSV HEADER
         `
