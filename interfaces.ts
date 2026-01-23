@@ -17,7 +17,7 @@ interface Patch {
   isbn: string | null;
 }
 
-type Page = string | number | null;
+type Page = string | number;
 
 type WSMessage =
   | { type: 'getBook'; }
