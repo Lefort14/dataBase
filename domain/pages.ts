@@ -2,7 +2,7 @@ class Pages {
     public page: string | number
 
     constructor() {
-        this.page = '1'
+        this.page = 1
     }
 }
 
