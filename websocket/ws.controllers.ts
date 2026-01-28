@@ -11,7 +11,7 @@ async function getHandleBook(
       
         ws.send(JSON.stringify({
           type: 'booksUpdated',
-          payload: books.result
+          payload: books
         }));
     } catch (err) {
         if(err instanceof Error) {
@@ -35,7 +35,7 @@ async function postHandleBook(
                 client.send(
                     JSON.stringify({
                         type: 'booksUpdated',
-                        payload: books.result
+                        payload: books
                     })
                 );
             }
@@ -62,7 +62,7 @@ async function deleleHandleBook(
                 client.send(
                     JSON.stringify({
                         type: 'booksUpdated',
-                        payload: books.result
+                        payload: books
                     })
                 );
             }
@@ -92,7 +92,7 @@ async function patchHandleBook(
                 client.send(
                     JSON.stringify({
                         type: 'booksUpdated',
-                        payload: books.result
+                        payload: books
                     })
                 );
             }

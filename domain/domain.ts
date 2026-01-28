@@ -21,6 +21,18 @@ async function getBook() {
           ORDER BY serial_id ASC;
           `, [pageInt]);
 
+        return result.rows
+    } catch (error) {
+        if(error instanceof Error) await errLogs(error)
+        throw error
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+async function pages() {
+    try {
+
         const pagesQuery = await pool.query(`
           SELECT COUNT(DISTINCT shelf_number) AS num_groups
           FROM books;
@@ -28,14 +40,10 @@ async function getBook() {
         
         const pages = parseInt(pagesQuery.rows[0].num_groups, 10);
 
-        return {
-            result: result.rows,
-            pages: pages
-        }
+        return pages
     } catch (error) {
         if(error instanceof Error) await errLogs(error)
-            
-        return { result: [], pages: 0 };
+        throw error
     }
 }
 
@@ -194,5 +202,6 @@ export {
     deleteBook,
     patchBook,
     downloadFile,
-    errLogs
+    errLogs, 
+    pages
 }

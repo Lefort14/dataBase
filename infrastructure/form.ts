@@ -1,13 +1,14 @@
 import express from "express";
-import { getBook, downloadFile } from '../domain/domain.ts'
+import { getBook, downloadFile, pages } from '../domain/domain.ts'
 
 
 async function getform(req: express.Request, res: express.Response) {
   try {
     
     const data = await getBook()  
-    
-    return res.render('index.ejs', { books: data.result, pages: data.pages });
+    const page = await pages()
+
+    return res.render('index.ejs', { books: data, pages: page });
 
   } catch (error) {
       return res
