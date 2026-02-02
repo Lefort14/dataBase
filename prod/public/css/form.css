@@ -1,0 +1,291 @@
+@import url('./fonts.css');
+@import url("../../bootstrap/dist/css/bootstrap.css");
+
+:root {
+  --bg1: white;
+  --bg2: #ff8400; 
+}
+
+/*  */
+
+html, body {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+}
+
+#main-background {
+  flex: 1;
+  padding: 0;
+  overflow: auto;
+}
+
+#container {
+  position: sticky;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  
+  padding: 20px;
+  min-height: 100vh;
+  width: 800px;
+  
+  border-right: 2px solid var(--bg2);
+  box-sizing: border-box;
+  box-shadow: 1px 0px 5px #000000;
+
+  background-color: var(--bg1);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#info {
+  background: var(--bg2);
+  color: var(--bg1);
+  font-weight: bold;
+  font-size: 14px;
+  padding-left: 10px;
+  position: absolute; /* абсолютное позиционирование */
+  bottom: 0;          /* прижимаем к низу родителя */
+  left: 0;
+  right: 0;           /* растягиваем по ширине родителя */
+  height: 20px;       
+}
+
+/* Создаем полупрозрачный слой поверх фона */
+/* #container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.511);
+  z-index: 1;
+  pointer-events: none; 
+} */
+
+/* Чтобы контент был поверх затемнения */
+/* #container > * {
+  z-index: 2;
+} */
+
+#pages {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin-bottom: 30px;
+  margin-left: 10px;
+}
+
+.btn-pages {
+  background-color: var(--bg2);
+  border-radius: 0px;
+  border: 2px solid black;
+  width: 40px;
+  height: 40px;
+
+  display: flex;           /* flex для текста внутри кнопки */
+  justify-content: center; /* горизонтальное центрирование текста */
+  align-items: center;     /* вертикальное центрирование текста */
+
+  font-family: monospace;  /* чтобы цифры занимали одинаковое место */
+  font-style: bold;
+}
+
+.btn-pages:hover {
+  background-color: black;
+  border-color: var(--bg2);
+}
+
+.group {
+  display: flex; 
+  flex-wrap: wrap;        /* делаем ряд */
+  flex-direction: row;   /* кнопки идут в ряд */
+  gap: 3px;              /* отступ между кнопками */
+  align-items: flex-start; /* кнопки не растягиваются по вертикали */
+  justify-content: center 
+}
+
+#choice {
+  color: var(--bg1);
+  margin: 20px 0 30px 0;
+  text-align: center;
+  width: 100%;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-size: 28px;
+  font-weight: bold;
+  font-family: 'dbFont';
+  z-index: 1;
+}
+
+#action {
+  color: #000000;
+  margin: 20px 0 30px 0;
+  text-align: center;
+  width: 4  0%;
+  font-size: 28px;
+  font-weight: bold;
+  font-family: 'dbFont';
+  background-color: transparent;
+  border: none;                   /* убрать рамку */
+  outline: none;                  /* убрать подсветку при фокусе */
+  appearance: none;               /* убрать стандартный стиль */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 5px 10px;
+  z-index: 1;
+}
+
+option {
+  background: rgb(0, 0, 0); /* фон */
+  color: var(--bg1);                 /* цвет текста */
+  padding: 8px;                /* внутренние отступы */
+  font-size: 16px;             /* размер шрифта */
+  border: none;           
+}
+
+form, #download-tab {
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 30px 20px;
+  border-radius: 0; /* Без закруглений */
+  gap: 15px;
+  font-family: 'dbFont';
+  font-weight: bold;
+  color: rgb(0, 0, 0); /* Белый текст в форме */
+  z-index: 10;
+}
+
+input[type="number"],
+input[type="text"],
+textarea {
+  font-size: 20px;
+  padding: 12px;
+  margin: 5px 0;
+  border: 2px solid #000000;
+  border-radius: 0; /* Без закруглений */
+  width: 100%;
+  max-width: 700px; /* Шире в 1.5 раза (350px * 1.5 ≈ 500px) */
+  min-height: 50px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.539); /* Полупрозрачный фон инпутов */
+  color: white; /* Белый текст */
+  transition: border-color 0.3s ease;
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus,
+textarea:focus {
+  border-color: var(--bg2);
+  outline: none;
+}
+
+.send {
+  color: var(--bg1);
+  padding: 12px 25px;
+  padding-top: 15px;
+  margin: 15px 0px 5px 0;
+  border: none;
+  border-radius: 0; /* Без закруглений */
+  cursor: pointer;
+  font-size: 16px;
+  font-family: 'dbFont';
+  font-weight: bold;
+  width: 300px; /* Шире в 1.5 раза (200px * 1.5 = 300px) */
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.466);; /* Полупрозрачный фон инпутов */
+  color: white; /* Белый текст */
+  background-color: var(--bg2);
+  border: 2px solid #000000;
+}
+
+.send:hover {
+  background-color: #000000;
+  border: 2px solid var(--bg2);
+  border-width: 2px;
+}
+
+/* Стили для placeholder */
+::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Стили для текста в textarea */
+textarea {
+  color: var(--bg1);
+  resize: vertical;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.load-hidden {
+  display: none;
+  margin-top: 20px;
+}
+
+.form-block {
+    margin-top: 20px;
+}
+
+.content-table {
+  border-collapse: collapse;
+  margin-left: auto;
+  font-size: 1em;
+  min-width: 400px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.content-table thead tr {
+  background-color: var(--bg2);
+  color: var(--bg1);
+  text-align: center;
+  font-weight: bold;
+}
+
+.content-table th,
+.content-table td {
+  padding: 5px 0px;
+}
+
+.content-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+  text-align: center;
+}
+
+.content-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.content-table tbody tr:last-of-type {
+  border-bottom: 2px solid #dddddd;
+}
+
+/* .content-table tbody tr.active-row {
+  font-weight: bold;
+  color: #ff8400;
+} */
+

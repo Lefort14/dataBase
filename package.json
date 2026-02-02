@@ -1,0 +1,43 @@
+{
+  "name": "database",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon --exec tsx index.ts",
+    "start": "tsx index.ts",
+    "build": "npx tsc && npm run build:assets",
+    "build:assets": "npx cpy '**/views/**/*' '**/public/**/*' prod"
+  },
+  "author": "Lefort",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "bootstrap": "^5.3.0",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "multer": "^2.0.2",
+    "pg": "^8.16.3",
+    "pg-copy-streams": "^7.0.0",
+    "websocket-ts": "^2.2.1",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@esbuild/win32-x64": "^0.27.2",
+    "@types/ejs": "^3.1.5",
+    "@types/express": "^5.0.5",
+    "@types/method-override": "^3.0.0",
+    "@types/node": "^24.10.1",
+    "@types/pg": "^8.16.0",
+    "@types/pg-copy-streams": "^1.2.5",
+    "@types/ws": "^8.18.1",
+    "method-override": "^3.0.0",
+    "nodemon": "^3.1.11",
+    "sass": "^1.97.2",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
