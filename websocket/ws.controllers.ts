@@ -1,6 +1,6 @@
 import WebSocket, { WebSocketServer } from 'ws';
 import { getBook, postBook, deleteBook, patchBook, errLogs } from '../domain/domain.js';
-import { type Post, type Delete, type Patch } from '../interfaces.js'
+import type { Post, Delete, Patch } from '../interfaces.js'
 
 
 async function getHandleBook(

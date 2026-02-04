@@ -1,5 +1,5 @@
 import { pool } from '../infrastructure/db.js'
-import { type Post, type Delete, type Patch, type Page } from '../interfaces.js'
+import type { Post, Delete, Patch, Page } from '../interfaces.js'
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from "url";

@@ -4,7 +4,6 @@
     /* ====== Output ====== */
     "rootDir": "./",
     "outDir": "prod",
-
     /* ====== ESM / Node ====== */
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
@@ -29,8 +28,12 @@
     "isolatedModules": false,
 
     /* ====== Hygiene ====== */
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+
+    "allowJs": true,
+    "noImplicitAny": true,
   },
   "include": ["**/*.ts"],
-  "exclude": ["prod"]
+  "exclude": ["prod", "node_modules", "launcher/.webpack"]
 }

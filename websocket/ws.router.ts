@@ -1,6 +1,6 @@
 import WebSocket, { WebSocketServer } from 'ws';
 import { getHandleBook, postHandleBook, deleleHandleBook, patchHandleBook } from './ws.controllers.js'
-import { type WSMessage } from '../interfaces.js';
+import type { WSMessage } from '../interfaces.js';
 import { curPage } from '../domain/pages.js';
 
 async function wsRouter(    

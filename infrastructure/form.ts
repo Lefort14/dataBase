@@ -12,6 +12,7 @@ async function getform(req: express.Request, res: express.Response) {
 
   } catch (error) {
       return res
+        .setHeader('Content-Type', 'text/html')
         .status(500)
         .send(`
         <h1>Ошибка GET запроса</h1>
@@ -32,6 +33,7 @@ async function download(req: express.Request, res: express.Response) {
 
   } catch (error) {
     return res
+      .setHeader('Content-Type', 'text/html')
       .status(500)
       .send(`
         <h1>Ошибка скачивания</h1>
