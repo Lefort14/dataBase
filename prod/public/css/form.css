@@ -1,5 +1,5 @@
 @import url('./fonts.css');
-@import url("../boostrap/css/bootstrap.css");
+@import url("../bootstrap/dist/css/bootstrap.css");
 
 :root {
   --bg1: white;
@@ -30,6 +30,7 @@ body {
   position: sticky;
   top: 0;
   left: 0;
+  z-index: 1;
 
   display: flex;
   flex-direction: column;
@@ -38,7 +39,7 @@ body {
   
   padding: 20px;
   min-height: 100vh;
-  width: 800px;
+  width: 35%;
   
   border-right: 2px solid var(--bg2);
   box-sizing: border-box;
@@ -92,8 +93,8 @@ body {
   background-color: var(--bg2);
   border-radius: 0px;
   border: 2px solid black;
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
 
   display: flex;           /* flex для текста внутри кнопки */
   justify-content: center; /* горизонтальное центрирование текста */
@@ -126,7 +127,6 @@ body {
   font-size: 28px;
   font-weight: bold;
   font-family: 'dbFont';
-  z-index: 1;
 }
 
 #action {
@@ -134,7 +134,7 @@ body {
   margin: 20px 0 30px 0;
   text-align: center;
   width: 4  0%;
-  font-size: 28px;
+  font-size: 20px;
   font-weight: bold;
   font-family: 'dbFont';
   background-color: transparent;
@@ -143,20 +143,18 @@ body {
   appearance: none;               /* убрать стандартный стиль */
   -webkit-appearance: none;
   -moz-appearance: none;
-  padding: 5px 10px;
-  z-index: 1;
 }
 
 option {
   background: rgb(0, 0, 0); /* фон */
   color: var(--bg1);                 /* цвет текста */
   padding: 8px;                /* внутренние отступы */
-  font-size: 16px;             /* размер шрифта */
+  font-size: 15px;             /* размер шрифта */
   border: none;           
 }
 
 form, #download-tab {
-  font-size: 20px;
+  font-size: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -173,18 +171,20 @@ form, #download-tab {
 input[type="number"],
 input[type="text"],
 textarea {
-  font-size: 20px;
+  font-size: 16px;
   padding: 12px;
   margin: 5px 0;
   border: 2px solid #000000;
   border-radius: 0; /* Без закруглений */
   width: 100%;
-  max-width: 700px; /* Шире в 1.5 раза (350px * 1.5 ≈ 500px) */
-  min-height: 50px;
+  min-width: 400px; /* Шире в 1.5 раза (350px * 1.5 ≈ 500px) */
+  max-width: 1000px;
+  height: 40px;
   box-sizing: border-box;
   background: rgba(0, 0, 0, 0.539); /* Полупрозрачный фон инпутов */
   color: white; /* Белый текст */
   transition: border-color 0.3s ease;
+  text-align: center;
 }
 
 input[type="number"]:focus,
@@ -205,7 +205,7 @@ textarea:focus {
   font-size: 16px;
   font-family: 'dbFont';
   font-weight: bold;
-  width: 300px; /* Шире в 1.5 раза (200px * 1.5 = 300px) */
+  width: 200px; /* Шире в 1.5 раза (200px * 1.5 = 300px) */
   transition: all 0.3s ease;
   box-sizing: border-box;
   background: rgba(0, 0, 0, 0.466);; /* Полупрозрачный фон инпутов */
@@ -250,10 +250,19 @@ input[type="number"]::-webkit-inner-spin-button {
     margin-top: 20px;
 }
 
+tr {
+  font-size: 14px;
+}
+
+#tr-title {
+  position: sticky;
+  z-index: 0
+}
+
 .content-table {
   border-collapse: collapse;
   margin-left: auto;
-  font-size: 1em;
+  font-size: 15px;
   min-width: 400px;
   overflow: hidden;
   width: 100%;

@@ -1,29 +1,17 @@
 import express from 'express';
-import dotenv from 'dotenv';
-import { fileURLToPath } from 'url';
-import path from 'path';
 import router from './routers/main.js';
-import methodOverride from "method-override";
 import { createServer, Server } from 'http';
 import { initWSS } from './websocket/wss.js';
-const DATA_PORT = Number(process.env.PORT);
+import { fileURLToPath } from 'url';
+import path from 'path';
 async function startServer(port, hostname = 'localhost') {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
-    dotenv.config({ debug: false, quiet: true });
     const app = express();
     app.use(express.urlencoded({ extended: true }));
-    app.use(methodOverride('_method'));
     app.use(express.json());
-    app.use(methodOverride(function (req, res) {
-        if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-            var method = req.body._method;
-            delete req.body._method;
-            return method;
-        }
-    }));
     app.set('view engine', 'ejs');
-    app.set('views', './views');
+    app.set('views', path.join(__dirname, 'views'));
     app.use('/', router);
     app.use(express.static('public'));
     app.use(express.static(__dirname));
@@ -37,4 +25,4 @@ async function startServer(port, hostname = 'localhost') {
         server.on('error', rej);
     });
 }
-export { DATA_PORT, startServer };
+export default startServer;

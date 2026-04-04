@@ -51,9 +51,12 @@ async function postBook(data) {
         let { description, isbn, shelf_number } = data;
         if (!isbn || isbn.trim().length === 0)
             isbn = '-';
-        await pool.query(`
+        const res = await pool.query(`
             SELECT add_book ($1, $2, $3)
             `, [description, isbn, shelf_number]);
+        const add = res.rows[0].add_book;
+        if (!add)
+            return console.log('Нельзя добавлять больше, чем на одну полку');
         const result = await pool.query(`
             SELECT serial_id FROM books
             ORDER BY serial_id;
@@ -129,7 +132,7 @@ async function downloadFile(result) {
         FROM books
         ORDER BY shelf_number, serial_id
         ) 
-        TO STDOUT WITH CSV HEADER
+        TO STDOUT WITH (FORMAT CSV, HEADER, ENCODING 'WIN1251')
         `;
         const stream = client.query(copyTo(query));
         stream.pipe(result);

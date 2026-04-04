@@ -1,3 +1,9 @@
+declare const ws: WebSocket;
+
+type TPayload = {
+  [k: string]: FormDataEntryValue;
+}
+
 document.addEventListener('submit', e => {
   const form = e.target;
   if (!(form instanceof HTMLFormElement)) return;
@@ -7,13 +13,10 @@ document.addEventListener('submit', e => {
 
   e.preventDefault();
 
-  const payload = Object.fromEntries(
+  const payload: TPayload = Object.fromEntries(
     new FormData(form).entries()
   );
-
-  console.log(payload)
-  console.log(action)
-
+  
   ws.send(JSON.stringify({
     type: action,
     payload

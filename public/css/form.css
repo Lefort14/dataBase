@@ -4,11 +4,20 @@
 :root {
   --bg1: white;
   --bg2: #ff8400; 
+  --bg3: black;
+  --bg4Table1: white;
+  --bg4Table2: #f3f3f3;
+  --borderBot: #dddddd;
+  --fontTable: black;
+  --contColor: white;
+  --optionBack: black;
+  --action: black;
+  --label: black;
+  --input: rgba(0, 0, 0, 0.539);
 }
 
-/*  */
-
 html, body {
+  background-color: var(--bg1);
   overflow: hidden;
   height: 100%;
 }
@@ -30,28 +39,29 @@ body {
   position: sticky;
   top: 0;
   left: 0;
+  z-index: 1;
 
-  display: flex;
+  display: inline-block;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   
   padding: 20px;
   min-height: 100vh;
-  width: 800px;
+  width: 35%;
   
   border-right: 2px solid var(--bg2);
   box-sizing: border-box;
   box-shadow: 1px 0px 5px #000000;
 
-  background-color: var(--bg1);
+  background-color: var(--contColor);
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 #info {
   background: var(--bg2);
-  color: var(--bg1);
+  color: white;
   font-weight: bold;
   font-size: 14px;
   padding-left: 10px;
@@ -60,6 +70,20 @@ body {
   left: 0;
   right: 0;           /* растягиваем по ширине родителя */
   height: 20px;       
+}
+
+#btn-theme {
+  background: transparent;
+  border: none;
+}
+
+#theme {
+  background-repeat: no-repeat;
+  background-position: center;
+  background: transparent;
+  width: 30px;
+  height: 30px;
+
 }
 
 /* Создаем полупрозрачный слой поверх фона */
@@ -91,9 +115,9 @@ body {
 .btn-pages {
   background-color: var(--bg2);
   border-radius: 0px;
-  border: 2px solid black;
-  width: 40px;
-  height: 40px;
+  border: 2px solid var(--bg3);
+  width: 35px;
+  height: 35px;
 
   display: flex;           /* flex для текста внутри кнопки */
   justify-content: center; /* горизонтальное центрирование текста */
@@ -101,11 +125,13 @@ body {
 
   font-family: monospace;  /* чтобы цифры занимали одинаковое место */
   font-style: bold;
+  color: white
 }
 
 .btn-pages:hover {
   background-color: black;
   border-color: var(--bg2);
+  color: white;
 }
 
 .group {
@@ -117,7 +143,7 @@ body {
   justify-content: center 
 }
 
-#choice {
+/* #choice {
   color: var(--bg1);
   margin: 20px 0 30px 0;
   text-align: center;
@@ -126,15 +152,14 @@ body {
   font-size: 28px;
   font-weight: bold;
   font-family: 'dbFont';
-  z-index: 1;
-}
+} */
 
 #action {
-  color: #000000;
+  color: var(--action);
   margin: 20px 0 30px 0;
   text-align: center;
   width: 4  0%;
-  font-size: 28px;
+  font-size: 20px;
   font-weight: bold;
   font-family: 'dbFont';
   background-color: transparent;
@@ -143,20 +168,26 @@ body {
   appearance: none;               /* убрать стандартный стиль */
   -webkit-appearance: none;
   -moz-appearance: none;
-  padding: 5px 10px;
-  z-index: 1;
+}
+
+.select-center {
+  text-align: center;
+}
+
+label {
+  color: var(--label);
 }
 
 option {
-  background: rgb(0, 0, 0); /* фон */
+  background: var(--optionBack); /* фон */
   color: var(--bg1);                 /* цвет текста */
   padding: 8px;                /* внутренние отступы */
-  font-size: 16px;             /* размер шрифта */
+  font-size: 15px;             /* размер шрифта */
   border: none;           
 }
 
 form, #download-tab {
-  font-size: 20px;
+  font-size: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -171,20 +202,22 @@ form, #download-tab {
 }
 
 input[type="number"],
-input[type="text"],
-textarea {
-  font-size: 20px;
+input[type="text"] {
+  font-size: 16px;
   padding: 12px;
   margin: 5px 0;
-  border: 2px solid #000000;
+  border: 2px solid var(--bg3);
   border-radius: 0; /* Без закруглений */
   width: 100%;
-  max-width: 700px; /* Шире в 1.5 раза (350px * 1.5 ≈ 500px) */
-  min-height: 50px;
+  min-width: 400px; /* Шире в 1.5 раза (350px * 1.5 ≈ 500px) */
+  max-width: 1000px;
+  height: 40px;
   box-sizing: border-box;
-  background: rgba(0, 0, 0, 0.539); /* Полупрозрачный фон инпутов */
+  background: var(--input); /* Полупрозрачный фон инпутов */
   color: white; /* Белый текст */
   transition: border-color 0.3s ease;
+  text-align: center;
+  font-size: 20px;
 }
 
 input[type="number"]:focus,
@@ -199,19 +232,18 @@ textarea:focus {
   padding: 12px 25px;
   padding-top: 15px;
   margin: 15px 0px 5px 0;
-  border: none;
   border-radius: 0; /* Без закруглений */
   cursor: pointer;
   font-size: 16px;
   font-family: 'dbFont';
   font-weight: bold;
-  width: 300px; /* Шире в 1.5 раза (200px * 1.5 = 300px) */
+  width: 200px; /* Шире в 1.5 раза (200px * 1.5 = 300px) */
   transition: all 0.3s ease;
   box-sizing: border-box;
   background: rgba(0, 0, 0, 0.466);; /* Полупрозрачный фон инпутов */
   color: white; /* Белый текст */
   background-color: var(--bg2);
-  border: 2px solid #000000;
+  border: 2px solid var(--bg3);
 }
 
 .send:hover {
@@ -250,10 +282,19 @@ input[type="number"]::-webkit-inner-spin-button {
     margin-top: 20px;
 }
 
+tr {
+  font-size: 14px;
+}
+
+#tr-title {
+  position: sticky;
+  z-index: 0
+}
+
 .content-table {
   border-collapse: collapse;
   margin-left: auto;
-  font-size: 1em;
+  font-size: 15px;
   min-width: 400px;
   overflow: hidden;
   width: 100%;
@@ -261,7 +302,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .content-table thead tr {
   background-color: var(--bg2);
-  color: var(--bg1);
+  color: white;
   text-align: center;
   font-weight: bold;
 }
@@ -272,16 +313,18 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .content-table tbody tr {
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid var(--borderBot);
   text-align: center;
+  background-color: var(--bg4Table1);
+  color: var(--fontTable)
 }
 
 .content-table tbody tr:nth-of-type(even) {
-  background-color: #f3f3f3;
+  background-color: var(--bg4Table2);
 }
 
 .content-table tbody tr:last-of-type {
-  border-bottom: 2px solid #dddddd;
+  border-bottom: 2px solid var(--borderBot);
 }
 
 /* .content-table tbody tr.active-row {
