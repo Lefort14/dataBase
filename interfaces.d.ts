@@ -1,5 +1,13 @@
 import { WebSocketServer } from "ws";
 
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      DB_PORT?: string;
+    }
+  }
+}
+
 interface Post {
   description: string;
   isbn: string
@@ -17,7 +25,9 @@ interface Patch {
   isbn: string | null;
 }
 
-type Page = string | number;
+type Page = string;
+
+type ThemesChoice = 'white' | 'black'
 
 type WSMessage =
   | { type: 'getBook'; }
@@ -25,12 +35,16 @@ type WSMessage =
   | { type: 'deleteBook'; payload: Delete }
   | { type: 'patchBook'; payload: Patch }
   | { type: 'pageUpdated'; page: Page }
+  | { type: 'themeChanged'; theme: ThemesChoice }
+  | { type: 'getTheme' }
+  | { type: 'themeReply', theme: ThemesChoice }
 
 export type {
     Post,
     Delete,
     Patch,
     Page,
-    WSMessage
+    WSMessage,
+    ThemesChoice
 }
 

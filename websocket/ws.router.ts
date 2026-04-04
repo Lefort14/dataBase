@@ -2,6 +2,7 @@ import WebSocket, { WebSocketServer } from 'ws';
 import { getHandleBook, postHandleBook, deleleHandleBook, patchHandleBook } from './ws.controllers.js'
 import type { WSMessage } from '../interfaces.js';
 import { curPage } from '../domain/pages.js';
+import { themes } from '../domain/themesCl.js'
 
 async function wsRouter(    
     ws: WebSocket,
@@ -34,6 +35,22 @@ async function wsRouter(
             case 'pageUpdated':
                 curPage.page = data.page
                 return await getHandleBook(ws);
+            case 'getTheme':
+                return ws.send(JSON.stringify({
+                    type: 'themeReply',
+                    theme: themes.theme
+                }));
+            case 'themeChanged':
+                themes.theme = data.theme
+                wss.clients.forEach((client) => {
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(JSON.stringify({
+                            type: 'themeReply',
+                            theme: themes.theme
+                        }));
+                    }
+                });
+                return;
             default:
             ws.send(JSON.stringify({
                 type: 'error',

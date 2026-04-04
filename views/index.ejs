@@ -9,13 +9,18 @@
   </head>
   <body>
     <div id="container">
+        <button type="button" id="btn-theme">
+          <img src="../theme1.png" alt="theme" id="theme">
+        </button>
+       <div class="select-center">
+         <select id="action">
+           <option value="create">Отправить данные</option>
+           <option value="delete">Удалить данные</option>
+           <option value="edit">Редактировать данные</option>
+           <option value="download">Скачать таблицу</option>
+         </select>
+       </div>
       <!-- Выпадающий список -->
-      <select id="action">
-        <option value="create">Отправить данные</option>
-        <option value="delete">Удалить данные</option>
-        <option value="edit">Редактировать данные</option>
-        <option value="download">Скачать таблицу</option>
-      </select>
 
       <!-- ========== ФОРМА СОЗДАНИЯ (CREATE) ========== -->
       <form 
@@ -86,7 +91,7 @@
     <div id="main-background">
       <table class="content-table">
             <thead>
-              <tr>
+              <tr id="tr-title">
                 <th>Порядковый номер</th>
                 <th>Название</th>
                 <th>ISBN</th>
@@ -105,8 +110,9 @@
             </tbody>
           </table>
     </div>
-    <script src="/action.js"></script>
-    <script src="/ws.js"></script>
-    <script src="/forms.js"></script>
+    <script src="/public/action.js"></script>
+    <script src="/public/ws.js"></script>
+    <script src="/public/forms.js"></script>
+    <script src="/public/themes.js"></script>
   </body>
 </html>

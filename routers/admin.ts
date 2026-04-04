@@ -9,7 +9,6 @@ const adminRouter = express.Router()
 adminRouter.route('/')
 .get(getform)
 
-
 adminRouter.use('/download', download)
 
 export default adminRouter

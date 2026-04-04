@@ -1,21 +1,22 @@
-import { pool } from '../infrastructure/db.js'
-import type { Post, Delete, Patch, Page } from '../interfaces.js'
+import { pool } from '../port.js'
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from "url";
 import { to as copyTo } from 'pg-copy-streams'
 import { Writable } from 'stream';
 import { curPage } from './pages.js';
+import type { Post, Delete, Patch, Page } from '../interfaces.js'
+import type { TGet, TDelete, TPatch, TPost, TPages, TPatchBook, TPatchResult } from '../domain-types.js'
+import type { PoolClient, QueryResult } from 'pg';
 
 const filename = fileURLToPath(import.meta.url)
 const __errorPath = path.dirname(filename)
 const __logPath = path.join(__errorPath, '../logs.txt')
 
-
-async function getBook() {
+async function getBook(): Promise<TGet[]>  {
     try {
-        const pageInt = curPage.page
-        const result = await pool.query(`
+        const pageInt: string | number = curPage.page
+        const result: QueryResult<TGet> = await pool.query<TGet>(`
           SELECT 
             serial_id, 
             description, 
@@ -35,15 +36,22 @@ async function getBook() {
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-async function pages() {
+async function pages(): Promise<number> {
     try {
 
-        const pagesQuery = await pool.query(`
+        const pagesQuery: QueryResult<TPages> = await pool.query<TPages>(`
           SELECT COUNT(DISTINCT shelf_number) AS num_groups
           FROM books;
         `) 
+
         
-        const pages = parseInt(pagesQuery.rows[0].num_groups, 10);
+        if (!pagesQuery.rows[0]) {
+            throw new Error("No pages found");
+        }
+
+        const pagesQueryResult: TPages = pagesQuery.rows[0];
+
+        const pages: number = parseInt(pagesQueryResult.num_groups, 10);
 
         return pages
     } catch (error) {
@@ -54,7 +62,7 @@ async function pages() {
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-async function postBook(data: Post) {
+async function postBook(data: Post): Promise<TPost[] | void> {
     try {
         let { 
           description, 
@@ -64,13 +72,16 @@ async function postBook(data: Post) {
     
         if(!isbn || isbn.trim().length === 0) isbn = '-'
     
-     await pool.query(`
+     const res = await pool.query(`
             SELECT add_book ($1, $2, $3)
             `,
             [description, isbn, shelf_number]
         )
-    
-        const result = await pool.query(`
+    const add = res.rows[0].add_book;
+
+    if(!add) return console.log('Нельзя добавлять больше, чем на одну полку')
+
+        const result: QueryResult<TPost> = await pool.query<TPost>(`
             SELECT serial_id FROM books
             ORDER BY serial_id;
         `)
@@ -85,12 +96,13 @@ async function postBook(data: Post) {
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-async function deleteBook(data: Delete) {
+async function deleteBook(data: Delete): Promise<TDelete[] | void> {
     try {
         const { 
             serial_id
         }: Delete = data;
-        const pageInt = curPage.page
+        const pageInt: string = curPage.page
+
         const checkResult = await pool.query( 
         `SELECT EXISTS(SELECT 1 FROM books WHERE shelf_number = $1 AND serial_id = $2)`,
         [pageInt, serial_id]
@@ -115,7 +127,7 @@ async function deleteBook(data: Delete) {
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-async function patchBook(data: Patch) {
+async function patchBook(data: Patch): Promise<TPatchResult[]> {
     try {
         let {
             old_serial_id,
@@ -126,7 +138,7 @@ async function patchBook(data: Patch) {
 
         const pageInt = curPage.page
 
-        function normalize(value: any) {
+        function normalize(value: any): null | string {
             return value === '' ? null : value
         }
 
@@ -134,7 +146,7 @@ async function patchBook(data: Patch) {
         isbn = normalize(isbn)
         description = normalize(description)
         
-        const result = await pool.query(`
+        const result: QueryResult<TPatchResult> = await pool.query<TPatchResult>(`
             SELECT patch_book(
             $1,                 -- shelf_number
             $2,                 -- current_serial
@@ -146,10 +158,6 @@ async function patchBook(data: Patch) {
             [pageInt, old_serial_id, new_serial_id, description, isbn]
         );
 
-        // const result = await pool.query(`
-        //     SELECT reorder_all_books()
-        // `)
-
         return result.rows
 
     } catch (error) {
@@ -160,11 +168,11 @@ async function patchBook(data: Patch) {
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-async function downloadFile(result: Writable) {
+async function downloadFile(result: Writable): Promise<string | void> {
     try {
-        const client = await pool.connect()
+        const client: PoolClient = await pool.connect()
         
-        const query = 
+        const query: string = 
         `
         COPY (SELECT 
         serial_id as "Порядковый номер", 
@@ -174,19 +182,24 @@ async function downloadFile(result: Writable) {
         FROM books
         ORDER BY shelf_number, serial_id
         ) 
-        TO STDOUT WITH CSV HEADER
+        TO STDOUT WITH (FORMAT CSV, HEADER, ENCODING 'UTF8')
         `
         
         const stream = client.query(copyTo(query))
 
         stream.pipe(result)
         
-        const streamPromise = new Promise((resolve, reject) => 
+        const streamPromise: Promise<string | void> = new Promise<string>((resolve, reject) => {
             stream.on('end', () => {
             client.release()
             resolve('поток закрыт')
             })
-        ).catch((err) => errLogs(err))
+
+            stream.on("error", (err: Error) => {
+                client.release();
+                reject(err);
+            });
+        }).catch((err: Error) => errLogs(err))
 
         return streamPromise
         
@@ -196,7 +209,7 @@ async function downloadFile(result: Writable) {
     }
 }
 
-async function errLogs(error: Error) {
+async function errLogs(error: Error): Promise<void> {
     console.log(error); 
     return fs.appendFile(__logPath, `[${new Date().toLocaleString()}] ${error}\n`, 'utf-8', () => console.log('логи обновлены!'))
 }   

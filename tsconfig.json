@@ -3,7 +3,7 @@
 
     /* ====== Output ====== */
     "rootDir": "./",
-    "outDir": "prod",
+    "outDir": "Dprod",
     /* ====== ESM / Node ====== */
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
@@ -35,5 +35,5 @@
     "noImplicitAny": true,
   },
   "include": ["**/*.ts"],
-  "exclude": ["prod", "node_modules", "launcher/.webpack"]
+  "exclude": ["Dprod", "node_modules", "launcher/.webpack"]
 }

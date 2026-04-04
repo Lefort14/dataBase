@@ -1,14 +1,16 @@
-class Pages<T extends string | number> {
-    public page: T
+import type { ThemesChoice } from '../interfaces.js'
 
-    constructor(page: T) {
-        this.page = page 
+class Themes {
+    public theme: ThemesChoice
+
+    constructor(th: ThemesChoice) {
+        this.theme = th
     }
 }
 
-const curPage = new Pages<string>('1')
+const themes = new Themes('white')
 
-export { curPage }
+export { themes }
 
 /*
 * Доделать класс глобального состояния страницы с полками на ejs, 
