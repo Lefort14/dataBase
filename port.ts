@@ -14,7 +14,7 @@ if (typeof app !== 'undefined') { // electron context
     const rootPath = app.getAppPath();
     envPath = app.isPackaged
         ? path.join(process.resourcesPath, '.env') // для сборки
-        : path.join(rootPath, '..', '..', '.env');             // для разработки
+        : path.join(rootPath, '..', '..', '.env'); // для разработки
 } else {
     // обычный node dev
     envPath = path.join(__dirname, '.env');
@@ -23,7 +23,6 @@ if (typeof app !== 'undefined') { // electron context
 // Загружаем dotenv
 dotenv.config({ path: envPath }) as DotenvConfigOptions;
 
-// Читаем порт с дефолтом
 const DATA_PORT: number = Number(process.env.PORT);
 
 export const pool: Pool = new Pool({

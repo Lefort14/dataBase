@@ -1,20 +1,24 @@
 "use strict";
 // Object.defineProperty(exports, "__esModule", { value: true });
-if (ws.readyState === WebSocket.OPEN) {
-    ws.send(JSON.stringify({ type: 'getTheme' }));
-}
-else {
-    ws.addEventListener('open', function () {
-        ws.send(JSON.stringify({ type: 'getTheme' }));
-    }, { once: true });
-}
 var theme = document.getElementById('btn-theme');
 var change = 'white';
-ws.addEventListener('message', function (e) {
-    var msg = JSON.parse(e.data);
-    if (msg.type === 'themeChanged') {
-        changeTheme(msg.theme);
+window.addEventListener('load', function () {
+    document.body.style.visibility = 'hidden';
+    if (ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({ type: 'getTheme' }));
     }
+    else {
+        ws.addEventListener('open', function () {
+            ws.send(JSON.stringify({ type: 'getTheme' }));
+        }, { once: true });
+    }
+    ws.addEventListener('message', function (e) {
+        var msg = JSON.parse(e.data);
+        if (msg.type === 'themeReply') {
+            changeTheme(msg.theme);
+            document.body.style.visibility = 'visible';
+        }
+    });
 });
 theme.addEventListener('click', function () {
     toggleTheme();

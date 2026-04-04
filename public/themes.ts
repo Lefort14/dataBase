@@ -1,23 +1,28 @@
 import type { ThemesChoice, WSMessage } from '../interfaces.js'
-declare const ws: WebSocket;
 
+declare const ws: WebSocket;
 const theme = document.getElementById('btn-theme') as HTMLButtonElement
 let change: ThemesChoice = 'white'
 
-if (ws.readyState === WebSocket.OPEN) {
-    ws.send(JSON.stringify({ type: 'getTheme' }));
-} else {
-    ws.addEventListener('open', () => {
+window.addEventListener('load', () => {
+    document.body.style.visibility = 'hidden';
+
+    if (ws.readyState === WebSocket.OPEN) {
         ws.send(JSON.stringify({ type: 'getTheme' }));
-    }, { once: true });
-}
+    } else {
+        ws.addEventListener('open', () => {
+            ws.send(JSON.stringify({ type: 'getTheme' }));
+        }, { once: true });
+    }
 
-ws.addEventListener('message', (e) => {
-  const msg: WSMessage  = JSON.parse(e.data);
+    ws.addEventListener('message', (e) => {
+    const msg: WSMessage  = JSON.parse(e.data);
 
-  if (msg.type === 'themeReply') { 
-    changeTheme(msg.theme)
-  }
+    if (msg.type === 'themeReply') { 
+        changeTheme(msg.theme)
+        document.body.style.visibility = 'visible';
+    }
+    });
 });
 
 theme.addEventListener('click', () => {

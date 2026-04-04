@@ -1,11 +1,4 @@
-import type { TGet } from "../domain-types.js";
-
-type TButtonEl = HTMLButtonElement;
-
-type TBooksUptd = {
-  type: string | 'bookUpdated';
-  payload: TGet[];
-}
+import type { TGet, TButtonEl, TBooksUptd } from "../domain-types.js";
 
 const ws: WebSocket = new WebSocket(`ws://${location.host}`);
 

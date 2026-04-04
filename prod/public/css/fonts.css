@@ -1,8 +1,0 @@
-@font-face {
-    font-family: 'dbFont'; /* Название шрифта для использования в CSS */
-    src: url('../fonts/vivoSansGlobal-Regular.ttf') format('truetype'); /* Путь к файлу и указание формата */
-    font-weight: 400;   /* Насыщенность шрифта */
-    font-style: normal;    /* Стиль шрифта */
-    font-display: swap;    /* Стратегия загрузки */
-}
-

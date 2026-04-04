@@ -4,6 +4,7 @@ type TGet = {
     isbn: string;
     shelf_number: string;
 }
+
 type TPost = Pick<TGet, 'serialId'>
 
 type TDelete = TGet
@@ -20,6 +21,14 @@ type TPages = {
     num_groups: string;
 }
 
+type TButtonEl = HTMLButtonElement;
+
+type TBooksUptd = {
+  type: string | 'bookUpdated';
+  payload: TGet[];
+}
+
+
 export {
     TGet,
     TPost,
@@ -27,5 +36,7 @@ export {
     TPatch,
     TPages,
     TPatchBook,
-    TPatchResult
+    TPatchResult,
+    TButtonEl,
+    TBooksUptd
 }
