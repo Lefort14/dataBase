@@ -1,0 +1,66 @@
+#pages {
+  position: absolute;
+  display: inline-block;
+  bottom: 0;
+  left: 0;
+  margin-bottom: 30px;
+  margin-left: 10px;
+}
+
+  /* Стилизация полосы прокрутки */
+  .group::-webkit-scrollbar {
+    width: 0px;
+    height: 6px;
+  }
+
+  /* Стилизация ползунка прокрутки */
+  .group::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    border-radius: 6px;
+  }
+
+  /* Стилизация фона полосы прокрутки */
+  .group::-webkit-scrollbar-track {
+    background-color: var(--bg1);
+  }
+
+  /* Стилизация стрелок прокрутки (нельзя в Chrome, но это работает в других браузерах) */
+  .group::-webkit-scrollbar-button {
+    background-color: #000000;
+  }
+
+ /* Контейнер для select */
+  .group {
+    display: inline-block;
+    border: none;
+    font-family: monospace;
+    font-weight: bold;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: transparent;
+    color: var(--bg3)
+  }
+
+  /* Кнопки внутри select */
+  .btn-pages {
+    background-color: var(--bg1);
+    border: none;
+    outline: none;
+    width: auto;
+    height: 35px;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    font-family: monospace;
+    font-weight: bold;
+    color: var(--bg3);
+    padding-left: 20px; /* Добавляем отступ слева */
+    padding-right: 20px; /* Добавляем отступ справа */
+  }
+
+  .btn-pages:hover {
+    background-color: black;
+    border-color: var(--bg2);
+    color: white;
+  }

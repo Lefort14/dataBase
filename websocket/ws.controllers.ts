@@ -1,7 +1,7 @@
 import WebSocket, { WebSocketServer } from 'ws';
 import { getBook, postBook, deleteBook, patchBook, errLogs } from '../domain/domain.js';
 import type { Post, Delete, Patch } from '../interfaces.js'
-import type { TPatch, TPatchBook, TPatchResult } from '../domain-types.js'
+import type { TPatch, TPatchBook, TPatchResult } from '../types.js'
 
 
 async function getHandleBook(
@@ -28,9 +28,24 @@ async function postHandleBook(
     wss: WebSocketServer,
 ): Promise<void> {
     try {
-        await postBook(payload);
+        const setBook = await postBook(payload);
         const books = await getBook();
     
+        if(!Array.isArray(setBook)) {
+            if(!setBook.success) {
+                wss.clients.forEach(client => {
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(
+                            JSON.stringify({
+                                type: 'transactionFailed',
+                                message: setBook.reply
+                            })
+                        );
+                    }
+                })
+            }
+        }
+
         wss.clients.forEach(client => {
             if (client.readyState === WebSocket.OPEN) {
                 client.send(
@@ -55,7 +70,23 @@ async function deleleHandleBook(
     wss: WebSocketServer,
 ): Promise<void> {
     try {
-        await deleteBook(payload);
+        const delBook = await deleteBook(payload);
+
+        if(!Array.isArray(delBook)) {
+            if(!delBook.success) {
+                wss.clients.forEach(client => {
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(
+                            JSON.stringify({
+                                type: 'transactionFailed',
+                                message: delBook.reply
+                            })
+                        );
+                    }
+                })
+            }
+        }
+        
         const books = await getBook();
         
         wss.clients.forEach(client => {
@@ -83,15 +114,25 @@ async function patchHandleBook(
 ): Promise<void> {
     try {
         
-        const result: TPatchResult[] = await patchBook(payload)
-
+        const result = await patchBook(payload)
         const books = await getBook()
 
-        if(!result[0]) {
-            throw new Error("No pages found");
-        }
+        if(!Array.isArray(result)) {
+            if(!result.success) {
 
-        if(Array.isArray(result) && result !== null) console.log(result[0].patch_book)
+                wss.clients.forEach(client => {
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(
+                            JSON.stringify({
+                                type: 'transactionFailed',
+                                message: result.reply
+                            })
+                        );
+                    }
+                })
+            }
+
+        }
 
         wss.clients.forEach(client => {
             if (client.readyState === WebSocket.OPEN) {
@@ -110,7 +151,6 @@ async function patchHandleBook(
         } 
     }
 }
-
 
 export { 
     getHandleBook, 

@@ -42,15 +42,11 @@ async function wsRouter(
                 }));
             case 'themeChanged':
                 themes.theme = data.theme
-                wss.clients.forEach((client) => {
-                    if (client.readyState === WebSocket.OPEN) {
-                        client.send(JSON.stringify({
-                            type: 'themeReply',
-                            theme: themes.theme
-                        }));
-                    }
-                });
-                return;
+                ws.send(JSON.stringify({
+                    type: 'themeReply',
+                    theme: themes.theme
+                }));
+                return; 
             default:
             ws.send(JSON.stringify({
                 type: 'error',

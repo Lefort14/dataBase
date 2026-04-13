@@ -1,4 +1,4 @@
-const select = document.getElementById("action") as HTMLInputElement
+const select = document.getElementById("action") as HTMLSelectElement
 const formCreate = document.getElementById("form-create") as HTMLFormElement;
 const formDelete = document.getElementById("form-delete") as HTMLFormElement;
 const formEdit = document.getElementById("form-edit") as HTMLFormElement;
@@ -14,7 +14,6 @@ function switchForms(): void {
     if (value === "create") formCreate.classList.remove("hidden");
     if (value === "delete") formDelete.classList.remove("hidden");
     if (value === "edit") formEdit.classList.remove("hidden");
-    if(value === "download") location.href = 'admin/download'
 
 }
 

@@ -2,16 +2,14 @@ import express from 'express'
 import router from './routers/main.js'
 import { createServer, Server } from 'http';
 import { initWSS } from './websocket/wss.js';
-import { fileURLToPath } from 'url'
 import path from 'path';
+import __dirname from './path.js';
 
 
 async function startServer(
   port: number,
   hostname: string = 'localhost'
 ): Promise<Server> {
-  const __filename = fileURLToPath(import.meta.url)
-  const __dirname = path.dirname(__filename)
   
   const app = express()
   
@@ -21,10 +19,10 @@ async function startServer(
   app.set('view engine', 'ejs')
   app.set('views', path.join(__dirname, 'views'))
     
-  app.use('/', router)
-  // app.use(express.static('public'))
+  app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.static(__dirname))
-  
+  app.use('/', router)
+
   const server = createServer(app) 
   initWSS(server)
   

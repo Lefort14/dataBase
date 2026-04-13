@@ -1,12 +1,13 @@
-import { pool } from '../port.js'
 import fs from 'fs'
 import path from 'path'
+import { pipeline } from 'stream/promises';
+import { pool } from '../port.js'
 import { fileURLToPath } from "url";
-import { to as copyTo } from 'pg-copy-streams'
+import { to as copyTo, from as copyFrom } from 'pg-copy-streams'
 import { Writable } from 'stream';
 import { curPage } from './pages.js';
-import type { Post, Delete, Patch, Page } from '../interfaces.js'
-import type { TGet, TDelete, TPatch, TPost, TPages, TPatchBook, TPatchResult } from '../domain-types.js'
+import type { Post, Delete, Patch } from '../interfaces.js'
+import type { TGet, TDelete, TPost, TPages, TPatchResult, TDeleteResult, TIsThisSuccess } from '../types.js'
 import type { PoolClient, QueryResult } from 'pg';
 
 const filename = fileURLToPath(import.meta.url)
@@ -62,7 +63,7 @@ async function pages(): Promise<number> {
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-async function postBook(data: Post): Promise<TPost[] | void> {
+async function postBook(data: Post): Promise<TPost[] | TIsThisSuccess> {
     try {
         let { 
           description, 
@@ -79,7 +80,13 @@ async function postBook(data: Post): Promise<TPost[] | void> {
         )
     const add = res.rows[0].add_book;
 
-    if(!add) return console.log('Нельзя добавлять больше, чем на одну полку')
+    if(!add) {
+        console.log('Нельзя добавлять больше, чем на одну полку')
+        return {
+            reply: 'Нельзя добавлять больше, чем на одну полку',
+            success: false
+        }
+    }
 
         const result: QueryResult<TPost> = await pool.query<TPost>(`
             SELECT serial_id FROM books
@@ -96,7 +103,7 @@ async function postBook(data: Post): Promise<TPost[] | void> {
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-async function deleteBook(data: Delete): Promise<TDelete[] | void> {
+async function deleteBook(data: Delete): Promise<TDeleteResult[] | TIsThisSuccess> {
     try {
         const { 
             serial_id
@@ -104,18 +111,32 @@ async function deleteBook(data: Delete): Promise<TDelete[] | void> {
         const pageInt: string = curPage.page
 
         const checkResult = await pool.query( 
-        `SELECT EXISTS(SELECT 1 FROM books WHERE shelf_number = $1 AND serial_id = $2)`,
-        [pageInt, serial_id]
+            `SELECT EXISTS(SELECT 1 FROM books WHERE shelf_number = $1 AND serial_id = $2)`,
+            [pageInt, serial_id]
         );
     
-        if (!checkResult.rows[0].exists) 
-            return console.log('Книги с таким номером не существует')
-    
-        const result = await pool.query(`
+        if (!checkResult.rows[0].exists) {
+            console.log('Книги с таким номером не существует')
+            return {
+                reply: 'Книги с таким номером не существует',
+                success: false
+            }
+        }
+            
+        
+        const result: QueryResult<TDeleteResult> = await pool.query(`
             SELECT delete_book($1, $2)
             `, 
             [serial_id, pageInt]
         )
+
+        if(!result.rows[0]!.delete_book) {
+            console.log('Нельзя удалить полку посреди таблицы')
+            return {
+                reply: 'Нельзя удалить полку посреди таблицы',
+                success: false
+            }
+        }
 
         return result.rows
 
@@ -127,7 +148,7 @@ async function deleteBook(data: Delete): Promise<TDelete[] | void> {
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-async function patchBook(data: Patch): Promise<TPatchResult[]> {
+async function patchBook(data: Patch): Promise<TPatchResult[] | TIsThisSuccess> {
     try {
         let {
             old_serial_id,
@@ -157,6 +178,14 @@ async function patchBook(data: Patch): Promise<TPatchResult[]> {
             `,
             [pageInt, old_serial_id, new_serial_id, description, isbn]
         );
+        
+        if(!result.rows[0]?.patch_book?.success && typeof result.rows[0]?.patch_book?.reply === 'string') {
+            console.log(result.rows[0]?.patch_book?.reply)
+            return {
+                reply: result.rows[0].patch_book.reply,
+                success: false
+            }
+        }
 
         return result.rows
 
@@ -171,21 +200,19 @@ async function patchBook(data: Patch): Promise<TPatchResult[]> {
 async function downloadFile(result: Writable): Promise<string | void> {
     try {
         const client: PoolClient = await pool.connect()
-        
-        const query: string = 
-        `
-        COPY (SELECT 
-        serial_id as "Порядковый номер", 
-        description as "Название", 
-        isbn as "ISBN", 
-        shelf_number as "Номер полки" 
-        FROM books
-        ORDER BY shelf_number, serial_id
-        ) 
-        TO STDOUT WITH (FORMAT CSV, HEADER, ENCODING 'UTF8')
-        `
-        
-        const stream = client.query(copyTo(query))
+
+        const stream = client.query(copyTo(`
+            COPY (SELECT 
+            serial_id as "Порядковый номер", 
+            description as "Название", 
+            isbn as "ISBN", 
+            shelf_number as "Номер полки" 
+            FROM books
+            ORDER BY shelf_number, serial_id
+            ) 
+            TO STDOUT WITH (FORMAT CSV, HEADER, ENCODING 'UTF8')
+        `,
+        ))
 
         stream.pipe(result)
         
@@ -208,6 +235,8 @@ async function downloadFile(result: Writable): Promise<string | void> {
         throw error
     }
 }
+
+/////////////////////////////////////////////////////////////////////////////////////
 
 async function errLogs(error: Error): Promise<void> {
     console.log(error); 

@@ -1,0 +1,28 @@
+#action {
+  color: var(--action);
+  margin: 20px 0 30px 0;
+  text-align: center;
+  width: 4  0%;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: 'dbFont';
+  background-color: transparent;
+  border: none;                   /* убрать рамку */
+  outline: none;                  /* убрать подсветку при фокусе */
+  appearance: none;               /* убрать стандартный стиль */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.select-center {
+  text-align: center;
+}
+
+#create, #delete, #edit, #download {
+  background: var(--optionBack); /* фон */
+  color: var(--bg1);                 /* цвет текста */
+  padding: 8px;                /* внутренние отступы */
+  font-size: 15px;             /* размер шрифта */
+  font-weight: bold;
+  border: none;           
+}

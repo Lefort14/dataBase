@@ -1,0 +1,81 @@
+Date : 2026-04-05 13:35:33
+Directory : d:\JS\dataBase
+Total : 40 files,  16970 codes, 113 comments, 302 blanks, all 17385 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| JSON               |          3 |     15,544 |          0 |          2 |     15,546 |
+| TypeScript         |         27 |        873 |         66 |        205 |      1,144 |
+| PostCSS            |          2 |        264 |         32 |         50 |        346 |
+| JavaScript         |          4 |        132 |          1 |         21 |        154 |
+| HTML               |          1 |         98 |          7 |         14 |        119 |
+| JSON with Comments |          3 |         59 |          7 |         10 |         76 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                               | files      | code       | comment    | blank      | total      |
++----------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                  |         40 |     16,970 |        113 |        302 |     17,385 |
+| . (Files)                                          |         10 |     15,707 |         15 |         51 |     15,773 |
+| domain                                             |          3 |        192 |         12 |         55 |        259 |
+| infrastructure                                     |          1 |         40 |          1 |         10 |         51 |
+| launcher                                           |         10 |        211 |         45 |         34 |        290 |
+| launcher (Files)                                   |          7 |        163 |          4 |         16 |        183 |
+| launcher\src                                       |          3 |         48 |         41 |         18 |        107 |
+| public                                             |         10 |        529 |         33 |        109 |        671 |
+| public (Files)                                     |          8 |        265 |          1 |         59 |        325 |
+| public\css                                         |          2 |        264 |         32 |         50 |        346 |
+| routers                                            |          2 |         16 |          0 |          6 |         22 |
+| views                                              |          1 |         98 |          7 |         14 |        119 |
+| websocket                                          |          3 |        177 |          0 |         23 |        200 |
++----------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                           | language           | code       | comment    | blank      | total      |
++----------------------------------------------------+--------------------+------------+------------+------------+------------+
+| d:\JS\dataBase\domain\domain.ts                    | TypeScript         |        175 |          5 |         45 |        225 |
+| d:\JS\dataBase\domain\pages.ts                     | TypeScript         |          8 |          7 |          5 |         20 |
+| d:\JS\dataBase\domain\themesCl.ts                  | TypeScript         |          9 |          0 |          5 |         14 |
+| d:\JS\dataBase\index.ts                            | TypeScript         |         28 |          1 |         12 |         41 |
+| d:\JS\dataBase\infrastructure\form.ts              | TypeScript         |         40 |          1 |         10 |         51 |
+| d:\JS\dataBase\interfaces.d.ts                     | TypeScript         |         42 |          0 |         10 |         52 |
+| d:\JS\dataBase\launcher\.eslintrc.json             | JSON with Comments |         16 |          0 |          1 |         17 |
+| d:\JS\dataBase\launcher\forge.config.ts            | TypeScript         |         59 |          0 |          4 |         63 |
+| d:\JS\dataBase\launcher\src\electron.ts            | TypeScript         |         44 |         12 |         14 |         70 |
+| d:\JS\dataBase\launcher\src\preload.ts             | TypeScript         |          0 |          2 |          1 |          3 |
+| d:\JS\dataBase\launcher\src\renderer.ts            | TypeScript         |          4 |         27 |          3 |         34 |
+| d:\JS\dataBase\launcher\tsconfig.json              | JSON with Comments |         19 |          0 |          1 |         20 |
+| d:\JS\dataBase\launcher\webpack.main.config.ts     | TypeScript         |         19 |          0 |          1 |         20 |
+| d:\JS\dataBase\launcher\webpack.plugins.ts         | TypeScript         |          7 |          1 |          3 |         11 |
+| d:\JS\dataBase\launcher\webpack.renderer.config.ts | TypeScript         |         16 |          0 |          4 |         20 |
+| d:\JS\dataBase\launcher\webpack.rules.ts           | TypeScript         |         27 |          3 |          2 |         32 |
+| d:\JS\dataBase\package-lock.json                   | JSON               |     15,466 |          0 |          1 |     15,467 |
+| d:\JS\dataBase\package.json                        | JSON               |         69 |          0 |          1 |         70 |
+| d:\JS\dataBase\path.ts                             | TypeScript         |          5 |          0 |          2 |          7 |
+| d:\JS\dataBase\port.ts                             | TypeScript         |         25 |          3 |          7 |         35 |
+| d:\JS\dataBase\public\action.js                    | JavaScript         |         16 |          0 |          7 |         23 |
+| d:\JS\dataBase\public\action.ts                    | TypeScript         |         15 |          0 |          8 |         23 |
+| d:\JS\dataBase\public\css\fonts.css                | PostCSS            |          7 |          0 |          2 |          9 |
+| d:\JS\dataBase\public\css\form.css                 | PostCSS            |        257 |         32 |         48 |        337 |
+| d:\JS\dataBase\public\forms.js                     | JavaScript         |         16 |          0 |          6 |         22 |
+| d:\JS\dataBase\public\forms.ts                     | TypeScript         |         18 |          0 |          7 |         25 |
+| d:\JS\dataBase\public\themes.js                    | JavaScript         |         67 |          1 |          1 |         69 |
+| d:\JS\dataBase\public\themes.ts                    | TypeScript         |         66 |          0 |         15 |         81 |
+| d:\JS\dataBase\public\ws.js                        | JavaScript         |         33 |          0 |          7 |         40 |
+| d:\JS\dataBase\public\ws.ts                        | TypeScript         |         34 |          0 |          8 |         42 |
+| d:\JS\dataBase\routers\admin.ts                    | TypeScript         |         10 |          0 |          4 |         14 |
+| d:\JS\dataBase\routers\main.ts                     | TypeScript         |          6 |          0 |          2 |          8 |
+| d:\JS\dataBase\start.ts                            | TypeScript         |          3 |          4 |          2 |          9 |
+| d:\JS\dataBase\tsconfig.electron.json              | JSON               |          9 |          0 |          0 |          9 |
+| d:\JS\dataBase\tsconfig.json                       | JSON with Comments |         24 |          7 |          8 |         39 |
+| d:\JS\dataBase\types.d.ts                          | TypeScript         |         36 |          0 |          8 |         44 |
+| d:\JS\dataBase\views\index.ejs                     | HTML               |         98 |          7 |         14 |        119 |
+| d:\JS\dataBase\websocket\ws.controllers.ts         | TypeScript         |        105 |          0 |         15 |        120 |
+| d:\JS\dataBase\websocket\ws.router.ts              | TypeScript         |         60 |          0 |          5 |         65 |
+| d:\JS\dataBase\websocket\wss.ts                    | TypeScript         |         12 |          0 |          3 |         15 |
+| Total                                              |                    |     16,970 |        113 |        302 |     17,385 |
++----------------------------------------------------+--------------------+------------+------------+------------+------------+

@@ -4,6 +4,7 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv {
       DB_PORT?: string;
+      DATA_PORT?: string;
     }
   }
 }
@@ -38,6 +39,7 @@ type WSMessage =
   | { type: 'themeChanged'; theme: ThemesChoice }
   | { type: 'getTheme' }
   | { type: 'themeReply', theme: ThemesChoice }
+  | { type: 'transactionFailed', message: string }
 
 export type {
     Post,

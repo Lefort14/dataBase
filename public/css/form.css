@@ -1,6 +1,6 @@
 @import url('./fonts.css');
 @import url('../../node_modules/bootstrap/dist/css/bootstrap.css');
-@import url('../boostrap/css/bootstrap.css');
+@import url('../boostrap/dist/css/bootstrap.css');
 
 :root {
   --bg1: white;
@@ -15,6 +15,8 @@
   --action: black;
   --label: black;
   --input: rgba(0, 0, 0, 0.539);
+  --bgBox1: #f8f8f8;
+  --boxShadow: black;
 }
 
 html, body {
@@ -29,12 +31,6 @@ body {
   padding: 0;
   height: 100vh;
   display: flex;
-}
-
-#main-background {
-  flex: 1;
-  padding: 0;
-  overflow: auto;
 }
 
 #container {
@@ -74,118 +70,8 @@ body {
   height: 20px;       
 }
 
-#btn-theme {
-  background: transparent;
-  border: none;
-}
-
-#theme {
-  background-repeat: no-repeat;
-  background-position: center;
-  background: transparent;
-  width: 30px;
-  height: 30px;
-
-}
-
-/* Создаем полупрозрачный слой поверх фона */
-/* #container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.511);
-  z-index: 1;
-  pointer-events: none; 
-} */
-
-/* Чтобы контент был поверх затемнения */
-/* #container > * {
-  z-index: 2;
-} */
-
-#pages {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  margin-bottom: 30px;
-  margin-left: 10px;
-}
-
-.btn-pages {
-  background-color: var(--bg2);
-  border-radius: 0px;
-  border: 2px solid var(--bg3);
-  width: 35px;
-  height: 35px;
-
-  display: flex;           /* flex для текста внутри кнопки */
-  justify-content: center; /* горизонтальное центрирование текста */
-  align-items: center;     /* вертикальное центрирование текста */
-
-  font-family: monospace;  /* чтобы цифры занимали одинаковое место */
-  font-style: bold;
-  color: white
-}
-
-.btn-pages:hover {
-  background-color: black;
-  border-color: var(--bg2);
-  color: white;
-}
-
-.group {
-  display: flex; 
-  flex-wrap: wrap;        /* делаем ряд */
-  flex-direction: row;   /* кнопки идут в ряд */
-  gap: 3px;              /* отступ между кнопками */
-  align-items: flex-start; /* кнопки не растягиваются по вертикали */
-  justify-content: center 
-}
-
-/* #choice {
-  color: var(--bg1);
-  margin: 20px 0 30px 0;
-  text-align: center;
-  width: 100%;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  font-size: 28px;
-  font-weight: bold;
-  font-family: 'dbFont';
-} */
-
-#action {
-  color: var(--action);
-  margin: 20px 0 30px 0;
-  text-align: center;
-  width: 4  0%;
-  font-size: 20px;
-  font-weight: bold;
-  font-family: 'dbFont';
-  background-color: transparent;
-  border: none;                   /* убрать рамку */
-  outline: none;                  /* убрать подсветку при фокусе */
-  appearance: none;               /* убрать стандартный стиль */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
-.select-center {
-  text-align: center;
-}
-
 label {
   color: var(--label);
-}
-
-option {
-  background: var(--optionBack); /* фон */
-  color: var(--bg1);                 /* цвет текста */
-  padding: 8px;                /* внутренние отступы */
-  font-size: 15px;             /* размер шрифта */
-  border: none;           
 }
 
 form, #download-tab {
@@ -211,8 +97,8 @@ input[type="text"] {
   border: 2px solid var(--bg3);
   border-radius: 0; /* Без закруглений */
   width: 100%;
-  min-width: 400px; /* Шире в 1.5 раза (350px * 1.5 ≈ 500px) */
-  max-width: 800px;
+  /* max-width: 400px; Шире в 1.5 раза (350px * 1.5 ≈ 500px) */
+  max-width: 700px;
   height: 40px;
   box-sizing: border-box;
   background: var(--input); /* Полупрозрачный фон инпутов */
@@ -239,7 +125,7 @@ textarea:focus {
   font-size: 16px;
   font-family: 'dbFont';
   font-weight: bold;
-  width: 200px; /* Шире в 1.5 раза (200px * 1.5 = 300px) */
+  width: 200px; 
   transition: all 0.3s ease;
   box-sizing: border-box;
   background: rgba(0, 0, 0, 0.466);; /* Полупрозрачный фон инпутов */
@@ -283,54 +169,3 @@ input[type="number"]::-webkit-inner-spin-button {
 .form-block {
     margin-top: 20px;
 }
-
-tr {
-  font-size: 14px;
-}
-
-#tr-title {
-  position: sticky;
-  z-index: 0
-}
-
-.content-table {
-  border-collapse: collapse;
-  margin-left: auto;
-  font-size: 15px;
-  min-width: 400px;
-  overflow: hidden;
-  width: 100%;
-}
-
-.content-table thead tr {
-  background-color: var(--bg2);
-  color: white;
-  text-align: center;
-  font-weight: bold;
-}
-
-.content-table th,
-.content-table td {
-  padding: 5px 0px;
-}
-
-.content-table tbody tr {
-  border-bottom: 1px solid var(--borderBot);
-  text-align: center;
-  background-color: var(--bg4Table1);
-  color: var(--fontTable)
-}
-
-.content-table tbody tr:nth-of-type(even) {
-  background-color: var(--bg4Table2);
-}
-
-.content-table tbody tr:last-of-type {
-  border-bottom: 2px solid var(--borderBot);
-}
-
-/* .content-table tbody tr.active-row {
-  font-weight: bold;
-  color: #ff8400;
-} */
-

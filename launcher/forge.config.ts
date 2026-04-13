@@ -8,8 +8,8 @@ import { WebpackPlugin } from '@electron-forge/plugin-webpack';
 import { FusesPlugin } from '@electron-forge/plugin-fuses';
 import { FuseV1Options, FuseVersion } from '@electron/fuses';
 
-import mainConfig from './webpack.main.config.js';
-import { rendererConfig } from './webpack.renderer.config.js';
+// import mainConfig from './webpack.main.config.js';
+// import { rendererConfig } from './webpack.renderer.config.js';
 
 const config: ForgeConfig = {
   packagerConfig: {
@@ -30,9 +30,9 @@ const config: ForgeConfig = {
   {
     name: '@electron-forge/plugin-webpack',
     config: {
-      mainConfig,
+      // mainConfig,
       renderer: {
-        config: rendererConfig,
+        // config: rendererConfig,
         entryPoints: [
           {
             html: './src/index.html',

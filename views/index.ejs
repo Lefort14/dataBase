@@ -5,19 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../public/css/form.css" />
     <link rel="stylesheet" href="../public/css/fonts.css" />
+    <link rel="stylesheet" href="../public/css/theme.css" />
+    <link rel="stylesheet" href="../public/css/pages.css" />
+    <link rel="stylesheet" href="../public/css/form-select.css">
+    <link rel="stylesheet" href="../public/css/table.css">
+    <link rel="stylesheet" href="../public/css/replies.css">
     <title>DB_admin</title>
   </head>
   <body>
     <div id="container">
         <button type="button" id="btn-theme">
-          <img src="../theme1.png" alt="theme" id="theme">
+          <img src="/images/theme1.png" alt="theme" id="theme">
+        </button>
+        <button type="button" id="btn-download">
+          <img src="/images/download1.png" alt="download" id="download-img">
+        </button>
+        <button type="button" id="btn-upload">
+          <img src="/images/upload1.png" alt="upload" id="upload-img">
+          <input type="file" accept=".csv" style="display: none;" id="upload-input">
         </button>
        <div class="select-center">
          <select id="action">
-           <option value="create">Отправить данные</option>
-           <option value="delete">Удалить данные</option>
-           <option value="edit">Редактировать данные</option>
-           <option value="download">Скачать таблицу</option>
+           <option id="create" value="create">Отправить данные</option>
+           <option id="delete" value="delete">Удалить данные</option>
+           <option id="edit" value="edit">Редактировать данные</option>
          </select>
        </div>
       <!-- Выпадающий список -->
@@ -80,13 +91,18 @@
         <button type="submit" class="send">Редактировать</button>
       </form>    
       <div id="pages">
-        <div class="group" role="group"> 
+        <select class="group"> 
              <% for (let i = 1; i <= pages; i++) { %>
-                <button type="button" data-num="<%= i %>" id="btn_<%= i %>" class="btn btn-primary btn-pages"><%= i %></button>
+                <option  value="<%= i %>" data-num="<%= i %>" id="btn_<%= i %>" class="btn btn-primary btn-pages"><%= i %> стр.</option>
               <% } %>
-        </div>
+             </select>
       </div>
-      <div id="info">DB_admin ver. 0.1.0</div>
+      <div id="info">DB_admin ver. 0.2.0</div>
+    </div>
+    <div id="reply" data-open="false">
+      <button id="reply-button" type="submit">
+        <div id="reply-text"></div>
+      </button>
     </div>
     <div id="main-background">
       <table class="content-table">
@@ -109,10 +125,14 @@
               <% }) %>
             </tbody>
           </table>
-    </div>
-    <script src="/public/action.js"></script>
-    <script src="/public/ws.js"></script>
-    <script src="/public/forms.js"></script>
-    <script src="/public/themes.js"></script>
+        </div>
+    <script src="/action.js"></script>
+    <script src="/ws.js"></script>
+    <script src="/forms.js"></script>
+    <script src="/themes.js"></script>
+    <script src="/pages.js"></script>
+    <script src="/download.js"></script>
+    <script src="/replies.js"></script>
+    <script src="/upload.js"></script>
   </body>
 </html>

@@ -1,5 +1,9 @@
 import express from "express";
-import { getBook, downloadFile, pages } from '../domain/domain.js'
+import { 
+  getBook, 
+  downloadFile, 
+  pages
+} from '../domain/domain.js'
 
 
 async function getform(req: express.Request, res: express.Response): Promise<express.Response | void> {
@@ -44,7 +48,9 @@ async function download(req: express.Request, res: express.Response): Promise<ex
   }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////
+
 export { 
   getform, 
-  download 
+  download
 };

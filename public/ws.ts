@@ -1,4 +1,4 @@
-import type { TGet, TButtonEl, TBooksUptd } from "../domain-types.js";
+import type { TGet, TBooksUptd } from "../types.js";
 
 const ws: WebSocket = new WebSocket(`ws://${location.host}`);
 
@@ -25,17 +25,3 @@ async function update<T extends TGet[]>(books: T) {
         `;
     });
 }
-
-const buttons = document.querySelectorAll<TButtonEl>('[id^="btn_"]');
-
-buttons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    console.log('Clicked:', btn.innerText);
-    const page = btn.innerText
-    ws.send(JSON.stringify({
-        type: 'pageUpdated',
-        page: parseInt(page, 10)
-      })
-    )
-  });
-}); // работает

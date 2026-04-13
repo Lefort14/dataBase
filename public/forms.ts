@@ -1,8 +1,5 @@
-declare const ws: WebSocket;
-
-type TPayload = {
-  [k: string]: FormDataEntryValue;
-}
+import type { TPayload } from "../types.js";
+declare const ws: WebSocket
 
 document.addEventListener('submit', e => {
   const form = e.target;
