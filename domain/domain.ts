@@ -32,7 +32,7 @@ async function getBook(): Promise<TGet[] | void>  {
     } catch (error) {
         if(error instanceof Error) {
             await errLogs(error) 
-            return console.log(error.message)
+            throw error
         }
     }
 }
@@ -60,14 +60,14 @@ async function pages(): Promise<number | void> {
     } catch (error) {
         if(error instanceof Error) {
             await errLogs(error) 
-            return console.log(error.message)
+            throw error
         }
     }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-async function postBook(data: Post): Promise<TPost[] | TIsThisSuccess | void> {
+async function postBook(data: Post): Promise<TPost[] | TIsThisSuccess> {
     try {
         let { 
           description, 
@@ -102,7 +102,7 @@ async function postBook(data: Post): Promise<TPost[] | TIsThisSuccess | void> {
     } catch (error) {
         if(error instanceof Error) {
             await errLogs(error) 
-            return console.log(error.message)
+            throw error
         }
     }
 }
@@ -149,7 +149,7 @@ async function deleteBook(data: Delete): Promise<TDeleteResult[] | TIsThisSucces
     } catch (error) {
         if(error instanceof Error) {
             await errLogs(error) 
-            return console.log(error.message)    
+            throw error    
         }
   }
 }
@@ -200,7 +200,7 @@ async function patchBook(data: Patch): Promise<TPatchResult[] | TIsThisSuccess |
     } catch (error) {
         if(error instanceof Error) {
             await errLogs(error) 
-            return console.log(error.message)
+            throw error
         }
     }
 }
@@ -243,7 +243,7 @@ async function downloadFile(result: Writable): Promise<string | void> {
     } catch (error) {
         if(error instanceof Error) {
             await errLogs(error) 
-            return console.log(error.message)
+            throw error
         }
     }
 }
@@ -274,7 +274,7 @@ async function uploadFile(file: Express.Multer.File): Promise<string | void> {
     } catch (error) {
         if(error instanceof Error) {
             await errLogs(error) 
-            return console.log(error.message)
+            throw error
         }
     } finally { 
         client.release() 
@@ -289,7 +289,7 @@ async function clearFile(): Promise<string | void> {
     } catch (error) {
         if(error instanceof Error) {
             await errLogs(error) 
-            return console.log(error.message)
+            throw error
         }
     } 
 }
