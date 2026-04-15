@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+
+    /* ====== Output ====== */
+    "rootDir": "./",
+    "outDir": "aprod",
+    /* ====== ESM / Node ====== */
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
+
+    /* ====== Type safety ====== */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    /* ====== Interop ====== */
+    "esModuleInterop": true,
+
+    /* ====== Build output ====== */
+    "sourceMap": false,
+    "declaration": false,
+
+    /* ====== Important ====== */
+    "allowImportingTsExtensions": false,
+    "emitDeclarationOnly": false,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": false,
+
+    /* ====== Hygiene ====== */
+    "skipLibCheck": true,
+
+
+    "allowJs": true,
+    "noImplicitAny": true,
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["aprod", "node_modules", "launcher/.webpack"]
+}

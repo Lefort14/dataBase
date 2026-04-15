@@ -1,0 +1,52 @@
+#btn-theme {
+  background: transparent;
+  border: none;
+}
+
+#theme {
+  background-repeat: no-repeat;
+  background-position: center;
+  background: transparent;
+  width: 30px;
+  height: 30px;
+
+}
+
+#btn-download {
+  background: transparent;
+  border: none;
+}
+
+#download-img {
+  background-repeat: no-repeat;
+  background-position: center;
+  background: transparent;
+  width: 30px;
+  height: 30px;
+}
+
+#btn-upload {
+  background: transparent;
+  border: none;
+}
+
+#upload-img {
+  background-repeat: no-repeat;
+  background-position: center;
+  background: transparent;
+  width: 30px;
+  height: 30px;
+}
+
+#btn-clear {
+  background: transparent;
+  border: none;
+}
+
+#clear-img {
+  background-repeat: no-repeat;
+  background-position: center;
+  background: transparent;
+  width: 30px;
+  height: 30px;
+}

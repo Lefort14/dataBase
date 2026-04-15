@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../public/css/form.css" />
+    <link rel="stylesheet" href="../public/css/fonts.css" />
+    <link rel="stylesheet" href="../public/css/buttons.css" />
+    <link rel="stylesheet" href="../public/css/pages.css" />
+    <link rel="stylesheet" href="../public/css/form-select.css">
+    <link rel="stylesheet" href="../public/css/table.css">
+    <link rel="stylesheet" href="../public/css/replies.css">
+    <link rel="stylesheet" href="../public/css/warning.css">
+    <title>DB_admin</title>
+  </head>
+  <body>
+    <div id="main-warning" data-open="false">
+      <div id="warning-background" role="button"></div>
+        <div id="warning">
+          <div id="warning-text">Уверены?</div>
+          <div id="btn-warning">
+            <button class="btn btn-success" style="min-width: 60px;">да</button>
+            <button class="btn btn-danger" style="min-width: 60px;">нет</button>
+          </div>  
+        </div>
+    </div>
+    <div id="container">
+        <button type="button" id="btn-theme">
+          <img src="/images/theme1.png" alt="theme" id="theme">
+        </button>
+        <button type="button" id="btn-download">
+          <img src="/images/download1.png" alt="download" id="download-img">
+        </button>
+        <button type="button" id="btn-upload">
+          <img src="/images/upload1.png" alt="upload" id="upload-img">
+          <input type="file" accept=".csv" style="display: none;" id="upload-input" form="upload-form">
+        </button>
+        <button type="button" id="btn-clear">
+          <img src="/images/clear1.png" alt="delete" id="clear-img">
+        </button>
+       <div class="select-center">
+         <select id="action">
+           <option id="create" value="create">Отправить данные</option>
+           <option id="delete" value="delete">Удалить данные</option>
+           <option id="edit" value="edit">Редактировать данные</option>
+         </select>
+       </div>
+      <!-- Выпадающий список -->
+
+      <!-- ========== ФОРМА СОЗДАНИЯ (CREATE) ========== -->
+      <form 
+      id="form-create" 
+      data-action="postBook"
+      class="form-block"
+      >
+        <label for="author">Описание:</label>
+        <input type="text" name="description" id="author" required />
+
+        <label for="isbn">ISBN:</label>
+        <input type="text" name="isbn" id="isbn" />
+
+        <label for="dataNumber">Номер полки:</label>
+        <input type="number" name="shelf_number" min="1" id="dataNumber" required />
+
+        <button type="submit" class="send">Отправить</button>
+      </form>
+              
+      <!-- ========== ФОРМА УДАЛЕНИЯ (DELETE) ========== -->
+      <form
+        id="form-delete"
+        data-action="deleteBook"
+        class="form-block hidden"
+      >
+        <input type="hidden" name="_method" />
+
+        <label for="delete-id">Порядковый номер:</label>
+        <input type="number" name="serial_id" id="delete-id" required />
+
+        <button type="submit" class="send">Удалить</button>
+      </form>
+
+      <!-- ========== ФОРМА РЕДАКТИРОВАНИЯ (PATCH) ========== -->
+      <form
+        id="form-edit"
+        data-action="patchBook"
+        class="form-block hidden"
+      >
+        <input type="hidden" name="_method" />
+
+        <label for="edit-id">Порядковый номер:</label>
+        <input type="number" name="old_serial_id" min="1" id="edit-id" required />
+
+        <label for="edit-id">Новый порядковый номер:</label>
+        <input type="number" name="new_serial_id" min="1" id="edit-id"/>
+
+        <label for="edit-description">Описание:</label>
+        <input type="text" name="description" id="edit-description"/>
+
+        <label for="edit-isbn">ISBN:</label>
+        <input type="text" name="isbn" id="edit-isbn"/>
+        <!-- 
+        <label for="edit-shelf">Номер полки:</label>
+        <input type="number" name="shelf_number" min="1" id="edit-shelf"/> -->
+
+        <button type="submit" class="send">Редактировать</button>
+      </form>    
+      <div id="pages">
+        <select class="group"> 
+             <% for (let i = 1; i <= pages; i++) { %>
+                <option  value="<%= i %>" data-num="<%= i %>" id="btn_<%= i %>" class="btn btn-primary btn-pages"><%= i %> стр.</option>
+              <% } %>
+             </select>
+      </div>
+      <div id="info">DB_admin ver. 1.0.0</div>
+    </div>
+    <div id="reply" data-open="false">
+      <button id="reply-button" type="submit">
+        <div id="reply-text"></div>
+      </button>
+    </div>
+    <div id="main-background">
+      <table class="content-table">
+            <thead>
+              <tr id="tr-title">
+                <th>Порядковый номер</th>
+                <th>Название</th>
+                <th>ISBN</th>
+                <th>Номер полки</th>
+              </tr>
+            </thead>
+            <tbody id="book-list">
+              <% books.forEach(book => { %>
+                <tr>
+                  <td><%= book.serial_id %>   </td>
+                  <td><%= book.description %> </td>
+                  <td><%= book.isbn %>        </td>
+                  <td><%= book.shelf_number %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+    <script src="/action.js"></script>
+    <script src="/ws.js"></script>
+    <script src="/forms.js"></script>
+    <script src="/themes.js"></script>
+    <script src="/pages.js"></script>
+    <script src="/download.js"></script>
+    <script src="/replies.js"></script>
+    <script src="/upload.js"></script>
+    <script src="/clear.js"></script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+@import url('./fonts.css');
+
+#reply {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 0;
+  box-shadow: 3px 3px 10px var(--boxShadow);
+  background-color: var(--bgBox1);
+  min-width: 20%;
+  min-height: 5%;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 2;
+  visibility: hidden;
+
+  transform: translateY(150%);
+  transition: transform 0.5s ease;
+}
+
+#reply-text {
+  font: 'dbFont';
+  font-size: 17px;
+  font-weight: bold;
+  color: var(--bg3);
+}
+
+#reply[data-open="true"] {
+  transform: translateY(0);
+  visibility: visible;
+}
+
+#reply-button {
+  background: transparent;
+  border: none;
+}
