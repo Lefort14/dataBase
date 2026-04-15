@@ -31,5 +31,6 @@ export const pool: Pool = new Pool({
     port: Number(process.env.DB_PORT)
 });
 
-
-export default DATA_PORT;
+export { 
+    DATA_PORT
+ };

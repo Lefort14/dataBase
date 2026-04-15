@@ -35,47 +35,43 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var _this = this;
-var upload = document.getElementById('btn-upload');
-var inputUp = document.getElementById('upload-input');
+var clearBtn = document.getElementById('btn-clear');
 var mainWarning = document.getElementById('main-warning');
 var warningBack = document.getElementById('warning-background');
 var yes = document.querySelector('.btn-success');
 var no = document.querySelector('.btn-danger');
-upload.addEventListener('click', function () {
-    inputUp.click();
+clearBtn.addEventListener('click', function () {
+    mainWarning.setAttribute('data-open', 'true');
 });
-inputUp.addEventListener('change', function () { return __awaiter(_this, void 0, void 0, function () {
-    var file, formData, response, _a, _b, _c, error_1;
-    var _d;
-    return __generator(this, function (_e) {
-        switch (_e.label) {
+warningBack.addEventListener('click', function () {
+    mainWarning.setAttribute('data-open', 'false');
+});
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape')
+        mainWarning.setAttribute('data-open', 'false');
+});
+no.addEventListener('click', function () {
+    mainWarning.setAttribute('data-open', 'false');
+});
+yes.addEventListener('click', function () { return __awaiter(_this, void 0, void 0, function () {
+    var res, _a, _b, _c;
+    return __generator(this, function (_d) {
+        switch (_d.label) {
             case 0:
-                _e.trys.push([0, 4, , 5]);
-                file = (_d = inputUp.files) === null || _d === void 0 ? void 0 : _d[0];
-                if (!file)
-                    return [2 /*return*/];
-                formData = new FormData();
-                formData.append('file', file);
-                return [4 /*yield*/, fetch('/admin/upload', {
-                        method: 'POST',
-                        body: formData
+                mainWarning.setAttribute('data-open', 'false');
+                return [4 /*yield*/, fetch('/admin/clear', {
+                        method: 'PUT'
                     })];
             case 1:
-                response = _e.sent();
-                if (!!response.ok) return [3 /*break*/, 3];
+                res = _d.sent();
+                if (!!res.ok) return [3 /*break*/, 3];
                 _a = Error.bind;
-                _c = (_b = "HTTP ".concat(response.status, ": ")).concat;
-                return [4 /*yield*/, response.text()];
-            case 2: throw new (_a.apply(Error, [void 0, _c.apply(_b, [_e.sent()])]))();
+                _c = (_b = "HTTP ".concat(res.status, ": ")).concat;
+                return [4 /*yield*/, res.text()];
+            case 2: throw new (_a.apply(Error, [void 0, _c.apply(_b, [_d.sent()])]))();
             case 3:
                 location.reload();
-                return [3 /*break*/, 5];
-            case 4:
-                error_1 = _e.sent();
-                if (error_1 instanceof Error)
-                    console.log('ошибка отправки файла:', error_1.message);
-                return [3 /*break*/, 5];
-            case 5: return [2 /*return*/];
+                return [2 /*return*/];
         }
     });
 }); });

@@ -29,13 +29,15 @@ function changeTheme(theme) {
         var img = document.querySelector('#theme');
         var imgDownload = document.querySelector('#download-img');
         var imgUpload = document.querySelector('#upload-img');
-        if (!img || !imgDownload || !imgUpload)
+        var imgClear = document.querySelector('#clear-img');
+        if (!img || !imgDownload || !imgUpload || !imgClear)
             return;
         change = theme;
         if (theme === 'black') {
             img.src = '/images/theme2.png';
             imgDownload.src = '/images/download2.png';
             imgUpload.src = '/images/upload2.png';
+            imgClear.src = '/images/clear2.png';
             document.documentElement.style.setProperty('--bg1', 'black');
             document.documentElement.style.setProperty('--bg3', 'white');
             document.documentElement.style.setProperty('--contColor', 'rgb(16, 16, 16)');
@@ -54,6 +56,7 @@ function changeTheme(theme) {
             img.src = '/images/theme1.png';
             imgDownload.src = '/images/download1.png';
             imgUpload.src = '/images/upload1.png';
+            imgClear.src = '/images/clear1.png';
             document.documentElement.style.setProperty('--bg1', 'white');
             document.documentElement.style.setProperty('--bg3', 'black');
             document.documentElement.style.setProperty('--contColor', 'white');

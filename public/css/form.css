@@ -46,7 +46,7 @@ body {
   
   padding: 20px;
   min-height: 100vh;
-  width: 35%;
+  width: 30%;
   
   border-right: 2px solid var(--bg2);
   box-sizing: border-box;
@@ -99,6 +99,7 @@ input[type="text"] {
   width: 100%;
   /* max-width: 400px; Шире в 1.5 раза (350px * 1.5 ≈ 500px) */
   max-width: 700px;
+  min-width: 100%;
   height: 40px;
   box-sizing: border-box;
   background: var(--input); /* Полупрозрачный фон инпутов */

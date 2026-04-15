@@ -4,7 +4,7 @@ import { pipeline } from 'stream/promises';
 import { pool } from '../port.js'
 import { fileURLToPath } from "url";
 import { to as copyTo, from as copyFrom } from 'pg-copy-streams'
-import { Writable } from 'stream';
+import { Writable, Readable } from 'stream';
 import { curPage } from './pages.js';
 import type { Post, Delete, Patch } from '../interfaces.js'
 import type { TGet, TDelete, TPost, TPages, TPatchResult, TDeleteResult, TIsThisSuccess } from '../types.js'
@@ -14,7 +14,7 @@ const filename = fileURLToPath(import.meta.url)
 const __errorPath = path.dirname(filename)
 const __logPath = path.join(__errorPath, '../logs.txt')
 
-async function getBook(): Promise<TGet[]>  {
+async function getBook(): Promise<TGet[] | void>  {
     try {
         const pageInt: string | number = curPage.page
         const result: QueryResult<TGet> = await pool.query<TGet>(`
@@ -30,14 +30,16 @@ async function getBook(): Promise<TGet[]>  {
 
         return result.rows
     } catch (error) {
-        if(error instanceof Error) await errLogs(error)
-        throw error
+        if(error instanceof Error) {
+            await errLogs(error) 
+            return console.log(error.message)
+        }
     }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-async function pages(): Promise<number> {
+async function pages(): Promise<number | void> {
     try {
 
         const pagesQuery: QueryResult<TPages> = await pool.query<TPages>(`
@@ -56,14 +58,16 @@ async function pages(): Promise<number> {
 
         return pages
     } catch (error) {
-        if(error instanceof Error) await errLogs(error)
-        throw error
+        if(error instanceof Error) {
+            await errLogs(error) 
+            return console.log(error.message)
+        }
     }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-async function postBook(data: Post): Promise<TPost[] | TIsThisSuccess> {
+async function postBook(data: Post): Promise<TPost[] | TIsThisSuccess | void> {
     try {
         let { 
           description, 
@@ -96,14 +100,16 @@ async function postBook(data: Post): Promise<TPost[] | TIsThisSuccess> {
         return result.rows
         
     } catch (error) {
-        if(error instanceof Error) await errLogs(error)
-        throw error
+        if(error instanceof Error) {
+            await errLogs(error) 
+            return console.log(error.message)
+        }
     }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-async function deleteBook(data: Delete): Promise<TDeleteResult[] | TIsThisSuccess> {
+async function deleteBook(data: Delete): Promise<TDeleteResult[] | TIsThisSuccess | void> {
     try {
         const { 
             serial_id
@@ -141,14 +147,16 @@ async function deleteBook(data: Delete): Promise<TDeleteResult[] | TIsThisSucces
         return result.rows
 
     } catch (error) {
-        if(error instanceof Error) await errLogs(error)
-        throw error    
+        if(error instanceof Error) {
+            await errLogs(error) 
+            return console.log(error.message)    
+        }
   }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-async function patchBook(data: Patch): Promise<TPatchResult[] | TIsThisSuccess> {
+async function patchBook(data: Patch): Promise<TPatchResult[] | TIsThisSuccess | void> {
     try {
         let {
             old_serial_id,
@@ -190,8 +198,10 @@ async function patchBook(data: Patch): Promise<TPatchResult[] | TIsThisSuccess> 
         return result.rows
 
     } catch (error) {
-        if(error instanceof Error) await errLogs(error)
-        throw error
+        if(error instanceof Error) {
+            await errLogs(error) 
+            return console.log(error.message)
+        }
     }
 }
 
@@ -231,12 +241,58 @@ async function downloadFile(result: Writable): Promise<string | void> {
         return streamPromise
         
     } catch (error) {
-        if(error instanceof Error) await errLogs(error)
-        throw error
+        if(error instanceof Error) {
+            await errLogs(error) 
+            return console.log(error.message)
+        }
     }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
+
+async function uploadFile(file: Express.Multer.File): Promise<string | void> {
+    const client = await pool.connect()
+    try {
+        await client.query(`TRUNCATE TABLE books RESTART IDENTITY;`)
+       
+        const ingestStream = client.query(
+            copyFrom(
+                `
+                    COPY books(serial_id, description, isbn, shelf_number) 
+                    FROM STDIN 
+                    WITH (
+                        FORMAT CSV, 
+                        HEADER true, 
+                        DELIMITER ','
+                    );
+                `
+            )
+        )
+        const sourceStream = Readable.from(file.buffer)
+
+        await pipeline(sourceStream, ingestStream)
+    } catch (error) {
+        if(error instanceof Error) {
+            await errLogs(error) 
+            return console.log(error.message)
+        }
+    } finally { 
+        client.release() 
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+async function clearFile(): Promise<string | void> {
+    try {
+        await pool.query(`TRUNCATE TABLE books RESTART IDENTITY;`)
+    } catch (error) {
+        if(error instanceof Error) {
+            await errLogs(error) 
+            return console.log(error.message)
+        }
+    } 
+}
 
 async function errLogs(error: Error): Promise<void> {
     console.log(error); 
@@ -249,6 +305,8 @@ export {
     deleteBook,
     patchBook,
     downloadFile,
+    uploadFile,
+    clearFile,
     errLogs, 
     pages
 }

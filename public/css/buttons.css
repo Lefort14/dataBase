@@ -37,3 +37,16 @@
   width: 30px;
   height: 30px;
 }
+
+#btn-clear {
+  background: transparent;
+  border: none;
+}
+
+#clear-img {
+  background-repeat: no-repeat;
+  background-position: center;
+  background: transparent;
+  width: 30px;
+  height: 30px;
+}

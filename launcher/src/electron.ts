@@ -1,6 +1,6 @@
 import { app, BrowserWindow, globalShortcut } from 'electron';
 import startServer from '../../index.js'
-import DATA_PORT from '../../port.js'
+import { DATA_PORT } from '../../port.js'
 import squirrelStartup from 'electron-squirrel-startup';
 import type { TInit, TCreateWindow } from '../../types.js';
 import __dirname from '../../path.js';
@@ -25,7 +25,7 @@ const createWindow: TCreateWindow = (
   const mainWindow = new BrowserWindow({
     height: 720,
     width: 1280,
-    icon: path.join(__dirname, "../../public/images/2B.png")
+    icon: path.join(__dirname, "/public/images/2B.png")
   });
 
   mainWindow.setMenu(null);

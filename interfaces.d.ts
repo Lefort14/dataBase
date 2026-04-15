@@ -26,6 +26,8 @@ interface Patch {
   isbn: string | null;
 }
 
+type MulterFile = Express.Multer.File;
+
 type Page = string;
 
 type ThemesChoice = 'white' | 'black'

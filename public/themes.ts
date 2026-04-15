@@ -34,7 +34,8 @@ function changeTheme(theme: ThemesChoice) {
         const img = document.querySelector('#theme') as HTMLImageElement;
         const imgDownload = document.querySelector('#download-img') as HTMLImageElement;
         const imgUpload = document.querySelector('#upload-img') as HTMLImageElement;
-        if (!img || !imgDownload || !imgUpload) return;
+        const imgClear = document.querySelector('#clear-img') as HTMLImageElement;
+        if (!img || !imgDownload || !imgUpload || !imgClear) return;
         
         change = theme;
         
@@ -42,6 +43,7 @@ function changeTheme(theme: ThemesChoice) {
             img.src = '/images/theme2.png'
             imgDownload.src = '/images/download2.png'
             imgUpload.src = '/images/upload2.png'
+            imgClear.src = '/images/clear2.png'
     
             document.documentElement.style.setProperty('--bg1', 'black')
             document.documentElement.style.setProperty('--bg3', 'white')
@@ -60,6 +62,7 @@ function changeTheme(theme: ThemesChoice) {
             img.src = '/images/theme1.png'
             imgDownload.src = '/images/download1.png'
             imgUpload.src = '/images/upload1.png'
+            imgClear.src = '/images/clear1.png'
             
             document.documentElement.style.setProperty('--bg1', 'white')
             document.documentElement.style.setProperty('--bg3', 'black')

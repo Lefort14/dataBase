@@ -5,14 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../public/css/form.css" />
     <link rel="stylesheet" href="../public/css/fonts.css" />
-    <link rel="stylesheet" href="../public/css/theme.css" />
+    <link rel="stylesheet" href="../public/css/buttons.css" />
     <link rel="stylesheet" href="../public/css/pages.css" />
     <link rel="stylesheet" href="../public/css/form-select.css">
     <link rel="stylesheet" href="../public/css/table.css">
     <link rel="stylesheet" href="../public/css/replies.css">
+    <link rel="stylesheet" href="../public/css/warning.css">
     <title>DB_admin</title>
   </head>
   <body>
+    <div id="main-warning" data-open="false">
+      <div id="warning-background" role="button"></div>
+        <div id="warning">
+          <div id="warning-text">Уверены?</div>
+          <div id="btn-warning">
+            <button class="btn btn-success" style="min-width: 60px;">да</button>
+            <button class="btn btn-danger" style="min-width: 60px;">нет</button>
+          </div>  
+        </div>
+    </div>
     <div id="container">
         <button type="button" id="btn-theme">
           <img src="/images/theme1.png" alt="theme" id="theme">
@@ -22,7 +33,10 @@
         </button>
         <button type="button" id="btn-upload">
           <img src="/images/upload1.png" alt="upload" id="upload-img">
-          <input type="file" accept=".csv" style="display: none;" id="upload-input">
+          <input type="file" accept=".csv" style="display: none;" id="upload-input" form="upload-form">
+        </button>
+        <button type="button" id="btn-clear">
+          <img src="/images/clear1.png" alt="delete" id="clear-img">
         </button>
        <div class="select-center">
          <select id="action">
@@ -97,7 +111,7 @@
               <% } %>
              </select>
       </div>
-      <div id="info">DB_admin ver. 0.2.0</div>
+      <div id="info">DB_admin ver. 1.0.0</div>
     </div>
     <div id="reply" data-open="false">
       <button id="reply-button" type="submit">
@@ -134,5 +148,6 @@
     <script src="/download.js"></script>
     <script src="/replies.js"></script>
     <script src="/upload.js"></script>
+    <script src="/clear.js"></script>
   </body>
 </html>
