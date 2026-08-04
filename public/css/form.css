@@ -46,7 +46,7 @@ body {
   
   padding: 20px;
   min-height: 100vh;
-  width: 30%;
+  width: 25%;
   
   border-right: 2px solid var(--bg2);
   box-sizing: border-box;
@@ -82,7 +82,7 @@ form, #download-tab {
   width: 100%;
   padding: 30px 20px;
   border-radius: 0; /* Без закруглений */
-  gap: 15px;
+  gap: 5px;
   font-family: 'dbFont';
   font-weight: bold;
   color: rgb(0, 0, 0); /* Белый текст в форме */

@@ -1,9 +1,9 @@
 const upload = document.getElementById('btn-upload') as HTMLButtonElement;
 const inputUp = document.getElementById('upload-input') as HTMLInputElement;
-const mainWarning = document.getElementById('main-warning') as HTMLElement;
-const warningBack = document.getElementById('warning-background') as HTMLElement;
-const yes = document.querySelector('.btn-success') as HTMLButtonElement;
-const no = document.querySelector('.btn-danger') as HTMLButtonElement;
+// const mainWarning = document.getElementById('main-warning') as HTMLElement;
+// const warningBack = document.getElementById('warning-background') as HTMLElement;
+// const yes = document.querySelector('.btn-success') as HTMLButtonElement;
+// const no = document.querySelector('.btn-danger') as HTMLButtonElement;
 
 upload.addEventListener('click', () => {
     inputUp.click()

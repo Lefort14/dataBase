@@ -1,8 +1,6 @@
 import WebSocket, { WebSocketServer } from 'ws';
 import { getBook, postBook, deleteBook, patchBook, errLogs } from '../domain/domain.js';
 import type { Post, Delete, Patch } from '../interfaces.js'
-import type { TPatch, TPatchBook, TPatchResult } from '../types.js'
-
 
 async function getHandleBook(
     ws: WebSocket
@@ -30,8 +28,9 @@ async function postHandleBook(
     try {
         const setBook = await postBook(payload);
         const books = await getBook();
-    
-        if(!Array.isArray(setBook)) {
+        
+        
+        if(!Array.isArray(setBook) && setBook) {
             if(!setBook.success) {
                 wss.clients.forEach(client => {
                     if (client.readyState === WebSocket.OPEN) {
@@ -45,7 +44,7 @@ async function postHandleBook(
                 })
             }
         }
-
+        
         wss.clients.forEach(client => {
             if (client.readyState === WebSocket.OPEN) {
                 client.send(
@@ -72,7 +71,7 @@ async function deleleHandleBook(
     try {
         const delBook = await deleteBook(payload);
 
-        if(!Array.isArray(delBook)) {
+        if(!Array.isArray(delBook) && delBook) {
             if(!delBook.success) {
                 wss.clients.forEach(client => {
                     if (client.readyState === WebSocket.OPEN) {
@@ -114,18 +113,16 @@ async function patchHandleBook(
 ): Promise<void> {
     try {
         
-        const result = await patchBook(payload)
+        const patBook = await patchBook(payload)
         const books = await getBook()
-
-        if(!Array.isArray(result)) {
-            if(!result.success) {
-
+        if(!Array.isArray(patBook) && patBook) {
+            if(!patBook.success) {
                 wss.clients.forEach(client => {
                     if (client.readyState === WebSocket.OPEN) {
                         client.send(
                             JSON.stringify({
                                 type: 'transactionFailed',
-                                message: result.reply
+                                message: patBook.reply
                             })
                         );
                     }

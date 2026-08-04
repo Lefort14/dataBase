@@ -53,11 +53,17 @@
       data-action="postBook"
       class="form-block"
       >
-        <label for="author">Описание:</label>
-        <input type="text" name="description" id="author" required />
+        <label for="description">Описание:</label>
+        <input type="text" name="description" id="description" required />
+
+        <label for="blanguage">Язык:</label>
+        <input type="text" name="blanguage" id="blanguage"/>
 
         <label for="isbn">ISBN:</label>
         <input type="text" name="isbn" id="isbn" />
+
+        <label for="status">Статус:</label>
+        <input type="text" name="status" id="status"/>
 
         <label for="dataNumber">Номер полки:</label>
         <input type="number" name="shelf_number" min="1" id="dataNumber" required />
@@ -96,11 +102,14 @@
         <label for="edit-description">Описание:</label>
         <input type="text" name="description" id="edit-description"/>
 
+        <label for="edit-blanguage">Язык:</label>
+        <input type="text" name="blanguage" id="edit-blanguage"/>
+
         <label for="edit-isbn">ISBN:</label>
         <input type="text" name="isbn" id="edit-isbn"/>
-        <!-- 
-        <label for="edit-shelf">Номер полки:</label>
-        <input type="number" name="shelf_number" min="1" id="edit-shelf"/> -->
+
+        <label for="edit-status">Статус:</label>
+        <input type="text" name="status" id="edit-status"/>
 
         <button type="submit" class="send">Редактировать</button>
       </form>    
@@ -124,7 +133,9 @@
               <tr id="tr-title">
                 <th>Порядковый номер</th>
                 <th>Название</th>
+                <th>Язык</th>
                 <th>ISBN</th>
+                <th>Статус</th>
                 <th>Номер полки</th>
               </tr>
             </thead>
@@ -133,7 +144,9 @@
                 <tr>
                   <td><%= book.serial_id %>   </td>
                   <td><%= book.description %> </td>
+                  <td><%= book.blanguage %> </td>
                   <td><%= book.isbn %>        </td>
+                  <td><%= book.status %> </td>
                   <td><%= book.shelf_number %></td>
                 </tr>
               <% }) %>

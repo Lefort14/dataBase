@@ -11,7 +11,7 @@ let envPath: string;
 if (typeof app !== 'undefined') { // electron context
     const rootPath = app.getAppPath();
     envPath = app.isPackaged
-        ? path.join(process.resourcesPath, 'app', '.env') // для сборки
+        ? path.join(process.resourcesPath, '.env') // для сборки
         : path.join(rootPath, '..', '..', '.env'); // для разработки
 } else {
     // обычный node dev

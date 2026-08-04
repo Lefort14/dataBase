@@ -19,7 +19,9 @@ async function update<T extends TGet[]>(books: T) {
         <tr>
             <td>${book.serial_id}</td>
             <td>${book.description}</td>
+            <td>${book.blanguage}</td>
             <td>${book.isbn}</td>
+            <td>${book.status}</td>
             <td>${book.shelf_number}</td>
         </tr>
         `;

@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs, { stat } from 'fs'
 import path from 'path'
 import { pipeline } from 'stream/promises';
 import { pool } from '../port.js'
@@ -21,7 +21,9 @@ async function getBook(): Promise<TGet[] | void>  {
           SELECT 
             serial_id, 
             description, 
+            blanguage,
             isbn, 
+            status,
             shelf_number 
           FROM books
           WHERE shelf_number = $1
@@ -67,20 +69,26 @@ async function pages(): Promise<number | void> {
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-async function postBook(data: Post): Promise<TPost[] | TIsThisSuccess> {
+async function postBook(data: Post): Promise<TPost[] | TIsThisSuccess | void> {
     try {
         let { 
           description, 
+          blanguage,
           isbn, 
+          status,
           shelf_number 
         }: Post = data
     
-        if(!isbn || isbn.trim().length === 0) isbn = '-'
+        if(!isbn || isbn.trim().length === 0) isbn = '-' 
+        if(!blanguage || blanguage.trim().length === 0) blanguage = '-'
+        if(!status || status.trim().length === 0) status = '-'
+        
     
+    // дописать функции в postgres
      const res = await pool.query(`
-            SELECT add_book ($1, $2, $3)
+            SELECT add_book ($1, $2, $3, $4, $5)
             `,
-            [description, isbn, shelf_number]
+            [description, blanguage, isbn, status, shelf_number]
         )
     const add = res.rows[0].add_book;
 
@@ -162,7 +170,9 @@ async function patchBook(data: Patch): Promise<TPatchResult[] | TIsThisSuccess |
             old_serial_id,
             new_serial_id,
             description,
-            isbn
+            blanguage,
+            isbn,
+            status
         }: Patch = data
 
         const pageInt = curPage.page
@@ -174,17 +184,22 @@ async function patchBook(data: Patch): Promise<TPatchResult[] | TIsThisSuccess |
         new_serial_id = normalize(new_serial_id)
         isbn = normalize(isbn)
         description = normalize(description)
+        blanguage = normalize(blanguage)
+        status = normalize(status)
         
+        // дописать функции в postgres
         const result: QueryResult<TPatchResult> = await pool.query<TPatchResult>(`
             SELECT patch_book(
             $1,                 -- shelf_number
             $2,                 -- current_serial
-            $3,                 -- new_serial (пусто в форме)
-            $4,                 -- new_description (заполнено)
-            $5                  -- new_isbn (пусто в форме)
+            $3,                 -- new_serial 
+            $4,                 -- new_description
+            $5,                 -- new_language 
+            $6,                 -- new_isbn
+            $7                  -- new_status
             );
             `,
-            [pageInt, old_serial_id, new_serial_id, description, isbn]
+            [pageInt, old_serial_id, new_serial_id, description, blanguage, isbn, status]
         );
         
         if(!result.rows[0]?.patch_book?.success && typeof result.rows[0]?.patch_book?.reply === 'string') {
@@ -214,8 +229,10 @@ async function downloadFile(result: Writable): Promise<string | void> {
         const stream = client.query(copyTo(`
             COPY (SELECT 
             serial_id as "Порядковый номер", 
-            description as "Название", 
+            description as "Название",
+            blanguage as "Язык", 
             isbn as "ISBN", 
+            status as "Статус",
             shelf_number as "Номер полки" 
             FROM books
             ORDER BY shelf_number, serial_id
@@ -258,7 +275,7 @@ async function uploadFile(file: Express.Multer.File): Promise<string | void> {
         const ingestStream = client.query(
             copyFrom(
                 `
-                    COPY books(serial_id, description, isbn, shelf_number) 
+                    COPY books(serial_id, description, blanguage, isbn, status, shelf_number) 
                     FROM STDIN 
                     WITH (
                         FORMAT CSV, 

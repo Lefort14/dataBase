@@ -9,9 +9,10 @@
     "dev:launcher": "nodemon --watch launcher/src --exec \"electron --no-sandbox --enable-logging -r tsx launcher/src/electron.ts\"",
     "start": "node aprod/start.js",
     "launcher": "electron --no-sandbox aprod/launcher/src/electron",
-    "build": "npx tsc && npm run build:assets && npm run build:boostrap",
-    "build:assets": "npx cpy '**/views/**/*' '**/public/сss/*' '**/public/fonts/*' '**/public/images/*' aprod",
-    "build:boostrap": "npx cpy 'node_modules/bootstrap/dist/**/*' aprod/public/boostrap",
+    "build": "npx tsc && npm run build:views && npm run build:assets && npm run build:boostrap",
+    "build:assets": "cp -r ./public/сss/ aprod/public/",
+    "build:views": "cp -r ./views aprod",
+    "build:boostrap": "cp -r node_modules/bootstrap/ aprod/public/",
     "package": "electron-packager aprod DB_admin --platform=win32 --arch=x64 --out=dist --overwrite --asar --ignore='tsconfig.json' --ignore='.gitignore'"
   },
   "author": "Lefort",

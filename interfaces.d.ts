@@ -11,7 +11,9 @@ declare global {
 
 interface Post {
   description: string;
-  isbn: string
+  blanguage: string;
+  isbn: string;
+  status: string;
   shelf_number: string;
 }
 
@@ -23,7 +25,9 @@ interface Patch {
   old_serial_id: string | null;
   new_serial_id: string | null;
   description: string | null;
+  blanguage: string | null;
   isbn: string | null;
+  status: string | null;
 }
 
 type MulterFile = Express.Multer.File;

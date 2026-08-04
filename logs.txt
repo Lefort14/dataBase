@@ -31,3 +31,22 @@
 [4/13/2026, 5:34:33 PM] error: duplicate key value violates unique constraint "ux_books_shelf_serial"
 [4/14/2026, 10:16:07 PM] error: syntax error at or near "$1"
 [4/15/2026, 5:16:23 PM] TypeError [ERR_INVALID_ARG_TYPE]: The "iterable" argument must be an instance of Iterable. Received undefined
+[25.04.2026, 17:06:56] error: отношение "books" не существует
+[25.04.2026, 17:41:07] error: роль "adminFork" не существует
+[25.04.2026, 17:41:40] error: отношение "books" не существует
+[25.04.2026, 17:41:41] error: отношение "books" не существует
+[25.04.2026, 18:34:23] error: повторяющееся значение ключа нарушает ограничение уникальности "ux_books_shelf_serial"
+[25.04.2026, 18:34:23] error: повторяющееся значение ключа нарушает ограничение уникальности "ux_books_shelf_serial"
+[7/29/2026, 3:44:18 PM] error: role "admin" is not permitted to log in
+[7/29/2026, 3:45:05 PM] error: role "admin" is not permitted to log in
+[7/29/2026, 3:46:17 PM] error: database "dataFork" does not exist
+[7/29/2026, 7:07:27 PM] error: role "admin" is not permitted to log in
+[7/29/2026, 7:08:04 PM] error: role "admin" is not permitted to log in
+[7/29/2026, 7:08:15 PM] error: role "admin" is not permitted to log in
+[7/29/2026, 7:08:17 PM] error: role "admin" is not permitted to log in
+[7/29/2026, 7:09:28 PM] error: role "admin" is not permitted to log in
+[7/29/2026, 7:09:29 PM] error: role "admin" is not permitted to log in
+[7/29/2026, 7:10:04 PM] error: role "admin" is not permitted to log in
+[7/29/2026, 7:10:06 PM] error: role "admin" is not permitted to log in
+[7/29/2026, 7:10:06 PM] error: role "admin" is not permitted to log in
+[7/29/2026, 7:10:07 PM] error: role "admin" is not permitted to log in

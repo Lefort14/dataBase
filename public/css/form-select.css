@@ -16,6 +16,7 @@
 
 .select-center {
   text-align: center;
+  height: 50px;
 }
 
 #create, #delete, #edit, #download {

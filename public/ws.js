@@ -50,7 +50,7 @@ function update(books) {
             tbody = document.getElementById('book-list');
             tbody.innerHTML = '';
             books.forEach(function (book) {
-                tbody.innerHTML += "\n        <tr>\n            <td>".concat(book.serial_id, "</td>\n            <td>").concat(book.description, "</td>\n            <td>").concat(book.isbn, "</td>\n            <td>").concat(book.shelf_number, "</td>\n        </tr>\n        ");
+                tbody.innerHTML += "\n        <tr>\n            <td>".concat(book.serial_id, "</td>\n            <td>").concat(book.description, "</td>\n            <td>").concat(book.blanguage, "</td>\n            <td>").concat(book.isbn, "</td>\n            <td>").concat(book.status, "</td>\n            <td>").concat(book.shelf_number, "</td>\n        </tr>\n        ");
             });
             return [2 /*return*/];
         });

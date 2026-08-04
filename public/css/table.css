@@ -49,3 +49,8 @@ tr {
   padding: 0;
   overflow: auto;
 }
+
+  /* Стилизация полосы прокрутки */
+  #main-background::-webkit-scrollbar {
+    width: 0px;
+  }

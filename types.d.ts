@@ -1,11 +1,17 @@
+import type { BrowserWindow } from 'electron';
+
 type TGet = {
     serial_id: number;
     description: string;
+    blanguage: string
     isbn: string;
+    status: string;
     shelf_number: string;
 }
 
-type TPost = Pick<TGet, 'serialId'>
+type TPost = {
+    serial_id: number;
+}
 type TDelete = TGet
 type TPatch = TGet
 type TPatchBook = {
